@@ -1,0 +1,101 @@
+\chapter{Introduction} \label{intro}
+
+Twenty-five years ago, the Nobel Prize-winning discovery of a planet orbiting a star outside of our solar system shook the astronomical community and created a wave of exoplanet science that thrives to this day. This discovery was made using measurements of stellar radial velocities (RVs) extracted from a ground-based spectrograph with an individual measurement precision of 13 m/s (Mayor \& Queloz 1995). 
+
+
+\section{The Radial-velocity Technique} \label{intro:eprv}
+
+The principle measurement of the RV technique is built upon fundamental Newtonian mechanics [CHECK].  as an exoplanet orbits its host star, it imparts a weak gravitational
+
+
+
+\subsection{A Brief History}
+
+\subsection{The State of the Field}
+
+
+
+\section{The EXtreme PREcision Spectrograph} \label{intro:expres}
+
+The majority of the work presented in this thesis was completed in support of the EXtreme PREcision Spectrograph [CITE JURGENSON]---a fiber-fed, high-resolution, laser-frequency-comb-calibrated spectrograph commissioned at the Lowell Discovery Telescope in 2018. Therefore, I will be using it as a guide to understand the physical and virtual mechanisms required make such precise measurements as the 1\ms wobble of a star.
+
+\section{Fiber-fed Radial-velocity Spectroscopy} \label{intro:optics}
+
+Determining where to focus efforts in improving the precision of RV measurement requires a full understanding of the measuring instrument. In the case of RV spectroscopy, and in particular this thesis, this involves knowledge of four critical areas: (1) the optical fiber infrastructure, (2) echelle spectrograph design, (3) wavelength calibration sources, and (4) data extraction software. In this section, I introduce these topics as primers before even further discussion in the meat of this thesis.
+
+\subsection{Optical Fiber Infrastructure} \label{intro:optics:fiber}
+
+
+
+Combining multiple signals from various sources into the same instrument. Modular.
+
+Etendue and coupling losses
+
+Focal ratio degradation
+
+Scrambling gain
+
+Modal noise
+
+\subsection{Echelle Spectroscopy} \label{intro:optics:echelle}
+
+Fiber injection
+
+Collimation and echelle grating dispersion
+
+Re-collimation and prism cross-dispersion
+
+Camera barrel re-focus and CCD
+
+Echellogram structure
+
+Resolution
+
+\subsection{Wavelength Calibration} \label{intro:wvln_cal}
+
+In order to extract stellar spectra, RV spectrographs use the spectra of well-characterized and stable light sources as a simultaneous or observation-bracketing reference on the spectrograph camera. Historically, thorium argon (Th-Ar) lamps and iodine reference cells have been used to calibrate RV spectrographs since their spectral properties are well understood and their bandwidth covers most of the visible spectrum. However, both of these light sources have inherent issues that limit RV measurements to approximately \SI{1}{\meter\per\second} precision. Th-Ar emission lines are broad, saturated, and irregularly spaced, meaning some wavelength regions are less well calibrated than others. The iodine technique, which applies absorption wavelengths directly on the stellar spectrum, masks the subtle spectral line profile effects imprinted by stellar activity. Furthermore, iodine introduces complexity, such as parameter cross talk, to the forward modeling \citep{spronck_fiber_2015} and the cells themselves may not have long term mechanical stability \citep{fischer_twenty-five_2014}.
+
+More recently, RV spectrographs have employed frequency combs (FCs), synthesized spectra containing sharp peaks of intensity at equally spaced frequencies, with the intention of better stability and therefore precision in their wavelength calibration. Ideally, the lines of a FC are non-overlapping and located at precisely determined wavelengths with flat intensity, to avoid over- or under-saturating pixels on the spectrograph detector. The FC must also have the proper free spectral range (FSR, frequency separation of comb lines) across the entire bandwidth of the spectrograph optics so that the detector can resolve each peak (more than $\sim$\SI{10}{\giga\hertz}) and calibrate a sufficient number of stellar frequencies (less than $\sim$\SI{40}{\giga\hertz}). Also, the zero-point frequency offset ($f_0$) and FSR should not drift over both short (seconds) and long (months) time scales. Most FC devices have been developed for the near-infrared, due to the proliferation of telecom interest around \SI{1550}{\nano\meter}, and this has been sufficient for observing M dwarf exoplanets \citep{fischer_state_2016}. However, to address planetary system statistics for late F, G, and early K type stars, the wavelength range will need to stretch through the visible to better calibrate many more absorption lines. It is especially important to reach the Calcium H \& K lines located below \SI{400}{\nano\meter} that contain chromospheric activity information that characterizes photospheric noise \citep{isaacson_chromospheric_2010, lovis_harps_2011}.
+
+A relatively cheap way to produce a broadband optical FC is using a tunable Fabry-P\'erot (FP), a resonant cavity that employs feedback to correct for drifts in length. They do not offer an inherent $f_0$ calibration, however, and must be referenced against a separate stable source for bootstrapped calibration \citep{mccracken_single-lock_2014, sturmer_rubidium-traced_2018} meaning the system cannot be self-contained. Therefore, fixed-length FP etalons were developed to mitigate this issue. However, \citet{reiners_laser-lock_2014} and \citet{wildi_passive_2012} have shown that the set distance between the two reflective surfaces still drifts unpredictably, especially over long time scales, thereby continuing to limit spectrograph precision to only $\sim$\SI{1}{\meter\per\second}.
+
+Menlo Systems has built perhaps the most advanced wavelength calibrator for visible RV spectroscopy, a laser FC that reaches $\sim$\SI{1}{\centi\meter\per\second} RV precision \citep{probst_laser_2014}. This FC pulses a femtosecond mode-locked laser to produce high finesse lines and an extremely stable FSR. Unfortunately, these lines are too tightly spaced for RV spectrographs, therefore the system must use line-by-line spectral filtering with multiple tunable FP cavities to suppress most of the produced frequencies. There are consequently some critical limitations to this device: complexity, cost, and limited bandwidth. The Menlo FC requires a continuing service contract to properly maintain it and thus has not yet reach true ``turn-key'' status. Also, this technology costs approximately \$1,000,000---a prohibitive price point for smaller RV projects---and is extremely bulky, limiting its use to larger ground-based spectrographs. Furthermore, the system is still limited to $\sim$\SI{450}{\nano\meter} thereby excluding the critical Calcium H \& K lines below \SI{400}{\nano\meter}.
+
+A promising and growing field of astro-comb development includes electro-optic modulation (EOM) combs and chip-based waveguide technologies. These devices offer ease-of-use along with a much more affordable price point [CITATIONS OUT THE WAZOO].
+
+Emission line wavelength calibration sources have another important function for the instrument: point spread function characterization. Since an echelle spectrograph converts spectral information into spatial information, a spectral point source (i.e. a single wavelength laser) would ideally be mapped as a physical point source on the spectrograph's detector. However, Within any optical re-imaging system, light is not perfectly translated from input to output. Rather, the light undergoes optical aberrations modifying it as it is reflected and diffracted throughout the system and, importantly, these effects are typically wavelength dependent. Therefore, shining a single wavelength laser into a spectrograph reveals exactly the optical aberrations, or point spread function, of the instrument at that wavelength. Emission line wavelength calibration sources are simply a collection of hundreds or thousands of such single wavelength lasers, thus they can be used to map the point spread function of a spectrograph across its entire spectral format, as I demonstrate in Chapters \ref{chapter:astro-comb} and \ref{chapter:spec-perf}.
+
+Finally, consideration needs to be made as to \textit{when} wavelength calibrations are made as part of the observation strategy. Namely, the decision between simultaneous calibrations---measuring the wavelength calibrator at the same time as the star except through a separate fiber---and bracketed calibrations---using the same fiber but alternating between stellar and calibration observations. Simultaneous calibrations have two inherent downsides: (1) a requirement to tailor the brightness of the calibrating light source to match signal-to-noise over various length of science observations (i.e. brighter and dimmer stars) and (2) systematic changes in the optical system may not perfectly correlate between separate fibers, meaning extra analysis is necessary to translate wavelength solutions generated by the simultaneous calibration light path to the science light path. Therefore, EXPRES uses bracketed calibrations in order to more consistently control the brightness of its laser frequency comb (which can reach a sufficient signal-to-noise level within only 10 seconds) and to calibrate the instrument using the same optical path and detector pixels as science observations. As demonstrated in Chapter \ref{chapter:pipeline}, various methods of interpolation are more than sufficient to then project these bracketed wavelength solutions to midpoint time of intermediate observations.
+
+\subsection{Non-instrumental effects}
+
+Telluric contamination
+
+Stellar activity
+
+\subsection{Data Extraction} \label{intro:extraction}
+
+Raw Image reduction
+
+Spectral extraction
+- Boxcar
+- Optimal
+- Spectro-perfectionism
+
+Wavelength calibration
+
+Barycentric correction
+
+Telluric modeling
+
+Radial velocity measurement
+- Cross-correlation
+- Forward modelling
+
+Stellar activity indicators
+
+\section{Thesis Outline} \label{intro:structure}
+
+In this thesis, I present the design and implementation of multiple novel methods---within instrumentation and data extraction---that have shown demonstrable improvement to many of the aspects of fiber-fed radial velocity spectroscopy outlined in the previous section. My work has entailed 
+
+This thesis is split into four chapters: two (Chapters \ref{chapter:modal-noise} and \ref{chapter:pipeline}) are reprints of peer-reviewed journal articles and the other two (Chapters \ref{chapter:astro-comb} and \ref{chapter:spec-perf}) are summaries of other work that I have completed that either unfit for publication or simply fell short.
