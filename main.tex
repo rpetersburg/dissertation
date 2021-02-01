@@ -21,10 +21,11 @@
 \usepackage{siunitx}
 \usepackage{physics}
 
-\newcommand{\unit}[1]{{\ensuremath{\,\mathrm{#1}}}}
-\newcommand{\ms}{{\unit{m\,s^{-1}}}}
-\newcommand{\cms}{{\unit{cm\,s^{-1}}}}
-\newcommand{\um}{{\unit{\mu{} m}}}
+\newcommand{\unit}[1]{~\mathrm{#1}}
+\newcommand{\ms}{~\si{\meter\per\second}~}
+\newcommand{\cms}{~\si{\centi\meter\per\second}~}
+\newcommand{\um}{~\si{\micro\meter}~}
+\newcommand{\kms}{~\si{\kilo\meter\per\second}~}
 
 \newcommand{\remark}[1]{{\color{red}#1}}
 
