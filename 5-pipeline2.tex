@@ -226,42 +226,43 @@ Differences in the method are much more apparent, however, when extracting obser
     \label{fig:spec-perf-vs-optimal-lfc}
 \end{figure}
 
-Regardless, the ultimate test of spectro-perfectionism is its ability to accurately measure RVs. Between August 19, 2019, and January 31, 2021, EXPRES took [INSERT NUMBER] of observations of HD 3651. I extracted these observations with both flat-relative spectro-perfectionism and the default flat-relative optimal extraction of the EXPRES pipeline. Due to the aforementioned issue with emission line sources and to decrease total computation time, I generated wavelength solutions for each set using only the optimally-extracted calibration sources, meaning the only difference in the two data sets is the method of extraction. Results from this test are visualized in Figure \ref{fig:spec-perf-rvs} and orbital parameters are summarized in Table \ref{tab:spec-perf-rvs}.
-
-
-
 \begin{figure}
     \centering
     \includegraphics{figures-5/spec-perf-rvs.pdf}
-    \caption{RVs generated from the EXPRES pipeline after using both optimal extraction and spectro-perfectionism on a series of HD 3651 observations. Residuals from fit Keplerian models for each set of RVs are shown in the bottom plot.}
+    \caption{RVs generated from the EXPRES pipeline after using both optimal extraction (top) and spectro-perfectionism (middle) on a series of HD 3651 observations. Residuals from fit Keplerian models for each set of RVs are shown in the bottom plot.}
     \label{fig:spec-perf-rvs}
 \end{figure}
 
 \begin{table}[width=\textwidth]
     \centering
-    \begin{tabular}{lll}
+    \begin{tabular}{c|cc}
         \hline
         \hline
-        Parameter & Spec-perf & Optimal \\
+        Parameter & Optimal & Spec-perf \\
         \hline
-        $K$ [\ms] & & \\
-        $P$ [days] & & \\
-        $e$ & & \\
-        RMS [\ms] & & \\
+        $K$ [\ms] & $16.5 \pm 0.2$ & $16.6 \pm 0.2$ \\
+        $P$ [days] & $62.25 \pm 0.03$ & $62.28 \pm 0.03$ \\
+        $e$ & $0.605 \pm 0.007$ & $0.591 \pm 0.007$ \\
+        SMP [\ms] & 0.30 & 0.32 \\
+        RMS [\ms] & 1.13 & 1.12 \\
     \end{tabular}
     \caption{Keplerian orbital parameters of HD 3651 b}
     \label{tab:spec-perf-rvs}
 \end{table}
 
+Regardless, the ultimate test of spectro-perfectionism is its ability to produce accurate RVs. Between August 2019, and October 2020, EXPRES took 80 observations of HD 3651. I extracted these observations with both flat-relative spectro-perfectionism and the default flat-relative optimal extraction of the EXPRES pipeline. Due to the aforementioned issue with emission line sources and to decrease total computation time, I generated wavelength solutions for each set using only the optimally-extracted calibration sources, meaning the only difference in the two data sets is the method of extraction. Results from this test are visualized in Figure \ref{fig:spec-perf-rvs} and orbital parameters are summarized in Table \ref{tab:spec-perf-rvs}. SMP (single measurement precision) is the median of the RV errors and RMS is the product of the SMP and the $\chi_\mathrm{red}$ of the fit. Results between these two extraction methods are quite similar.
+
 \subsection{Discussion}
 
-There is much left to be explored and improved with spectro-perfectionism.
+As demonstrated in this section, flat-relative spectro-perfectionism has been quite the double-edged sword. The flat-relative PSF model proved to be quite successful at fitting the EXPRES PSF with significantly fewer parameters than the two-dimensional model while still providing a smoothly varying structure across the detector. Unfortunately, the minimal improvements to speed and complexity using this method are then far outweighted by the pure computation power required to re-convolve individual orders simultaneous, which is shown to be superior to chunking. Thirty seconds per order over 86 orders leading to 45+ minute extraction times is simply too much to adequately test and verify this method, especially with dozens of new observations coming in each day. Also, although stellar spectra are very similar to those from optimal extraction and LFCs are extracted at higher resolution and signal-to-noise, ringing artifacts still come into play for high contrast spectral regions. Finally, the improvement to RVs over optimal extraction is minimal, but at least shows that spectro-perfectionism is at least on par with trusted methods.
 
-EXPRES has an advantage over other RV spectrographs which makes flat-relative spectro-perfectionism (and even, by extension, optimal extraction) more accurate: a rectangular fiber input. One of the largest improvements from using a flat-relative PSF---less complexity in the model---could be completely removed from a less separable PSF function. Take, for example, a circular or elliptical PSF. 
+This all being said, I would not recommend spectro-perfectionism as a one-to-one replacement for optimal extraction, since it increases computational complexity with minimal improvement to results. However, there are multiple avenues of exploration and further improvements that I believe can bring spectro-perfectionism into the mainstream.
 
-Gold deconvolution
+Speed-up of the re-convolution is an obvious angle. SciPy's sparse package provides a 20\% increase in speed over other SciPy linear algebra functions, but I have yet to find anything faster. I have also looked into iterative deconvolution methods such as Gold deconvolution \citep{morhac_efficient_2003, morhac_deconvolution_2006} that preclude the need for re-convolution due to strong assumptions of positive-definiteness in the matrices. However, due to the potentially large number of iterations required to reach a stable solution, these methods sometimes take even longer. Better optimization through parallelization may also be a possibility. Regardless, further research here should absolutely be prioritized.
 
-Magain sampling
+Changing the sampling rate of the extraction is another powerful way to utilize spectro-perfectionism. Dispersion is not perfectly constant across each order, therefore, choosing a sampling rate to match the dispersion could prove worthwhile in more easily combining spectra from neighboring orders. However, I will note that careful consideration for normalization, perhaps through the re-convolution matrix, is required when changing the sampling rate in order to continue matching the brightness of adjacent orders.
+
+Finally, I would be curious to see how flat-relative spectro-perfectionism works with spectrographs fed by non-rectangular fibers or slits, such as NEID or HARPS. Relatively much more of the PSF is shared between adjacent columns, since the slit is not as tall, therefore I would expect the differences in extraction and potentially resultant RVs to be much larger.
 
 \section{\textit{B}-spline Regression} \label{pipeline2:bspline}
 
@@ -313,7 +314,7 @@ Barycentric correction (1) is an inherent part of the pipeline so these large of
     \centering
     \includegraphics[width=\textwidth]{figures-5/stellar-template.pdf}
     \caption{Portion of a stellar template generated from 95 observations of HD 3651. The tellurics are left in the data to demonstrate how they do not effect the eventual template.}
-    \label{fig:stellar-template.pdf}
+    \label{fig:stellar-template}
 \end{figure}
 
 \subsection{Discussion}
@@ -343,6 +344,13 @@ With a \textit{B}-spline stellar template in hand, I constructed a forward model
 \end{itemize}
 This final point is most critical to the new implementation; since the \textit{B}-spline makes use of the full spectrum simultaneously as opposed to order-wise, it follows that the RV analysis could do the same. This enables the same benefit as for combining orders in other analysis---increased signal-to-noise along the ends of orders---which should enable greater consistency in RV measurement for these particular regions of the spectra.
 
+\begin{figure}
+    \centering
+    \includegraphics{figures-5/chunk-vels.pdf}
+    \caption{Demonstration of chunk velocities for an observation of HD 3651 taken on October 24, 2020 using both pixel-chunks (top) and wavelength-chunks (bottom).}
+    \label{fig:chunk-vels}
+\end{figure}
+
 The chunk-by-chunk velocity measurement is similar to that used in the previous chunk-by-chunk analysis:
 \begin{enumerate}
     \item combine all observations of the given stellar target, mask out telluric lines deeper than half the continuum and divide the given telluric model for shallower lines,
@@ -354,28 +362,35 @@ Masked residual outliers in the spectrum typically come from improper telluric m
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/chunk-vels.pdf}
-    \caption{Demonstration of chunk velocities for an observation of HD 3651 taken on October 24, 2020 using both pixel-chunks (left) and wavelength-chunks (right).}
-    \label{fig:chunk-vels}
+    \includegraphics{figures-5/pixel-chunk-resid.pdf}
+    \caption{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using pixel chunks.}
+    \label{fig:pixel-chunk-resid}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics{figures-5/wvln-chunk-resid.pdf}
+    \caption{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using wavelength chunks.}
+    \label{fig:wvln-chunk-resid}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics{figures-5/cbc-hist.pdf}
+    \caption{Histograms for the distribution of chunk velocities calculated using pixel (top) and wavelength (bottom) chunk both with and without residual velocity corrections. These are variance weighted histograms, meaning the contribution of a single velocity is weighted by its posterior variance.}
+    \label{fig:cbc-hist}
 \end{figure}
 
 Once a velocity and uncertainty is generated for each chunk, an RV for the observation can be calculated:
 \begin{enumerate}
-    \item calculate the variance weighted mean for each observation,
-    \item calculate a variance weighted mean residual for each chunk (an approximation for the systematic velocity offset of the chunk) and subtract it from each corresponding chunk velocity of each observation,
+    \item calculate the median velocity for each observation,
+    \item calculate a median residual velocity for each chunk (an approximation for the systematic velocity offset of the chunk) and subtract it from each corresponding chunk velocity of each observation,
     \item calculate a reduced $\chi$ metric for each chunk (a normalized approximation for the intrinsic velocity scatter of the chunk) and multiply it against each corresponding chunk uncertainty of each observation, and
-    \item re-calculate the variance weighted mean for each observation, iteratively masking $5\sigma$ outliers one by one.
+    \item calculate the variance weighted mean for each observation, iteratively masking $5\sigma$ outliers one by one.
 \end{enumerate}
-These steps are meant to mitigate systematic effects due to the instrument (e.g. detector non-uniformities), stellar activity which may modify certain absorption lines more than others, and possible residual problems due to imperfect telluric modeling. An example of the systematic velocity offsets and reduced $\chi$ metric for each chunk is shown in Figure \ref{fig:chunk-offsets}.
+These steps are meant to mitigate systematic effects due to the instrument (e.g. detector non-uniformities), stellar activity which may modify certain absorption lines more than others, and possible residual problems due to imperfect telluric modeling.
 
-\begin{figure}
-    \centering
-    \includegraphics{figures-5/chunk-offsets.pdf}
-    \caption{Chunk mean velocity offsets (left) and reduced $\chi$ metrics (right) over all observations of HD 3651.}
-    \label{fig:chunk-offsets}
-\end{figure}
-
-The data set used to compare against previous RV measurement methods is the same as used for spectro-perfectionism: observations of HD 3651 from [DATE] to [DATE]. A comparison of the velocities generated from the previous and this new forward model are shown in Figure \ref{fig:cbc-comparison} along with corresponding residuals to a Keplerian orbital fit. [ANALYSIS HERE]
+An example of the systematic velocity offsets and reduced $\chi$ metric for each chunk using either method is shown in Figures \ref{fig:pixel-chunk-resid} and \ref{fig:wvln-chunk-resid}. Systematic velocity offsets are clearly seen in the bottom left- and right-hand corners of the pixel-chunk data. This is likely caused by the slight misalignment of adjacent orders in the stellar template discussed in the previous section in combination with low density wavelength calibration information from exclusively the ThAr lines. An example of the improvement to the weighted distribution of velocities due to these corrections is shown in Figure \ref{fig:cbc-hist}. The corrections do improve the velocity distribution slightly by increasing weight near the mean and removing some weight from the wings. Also, these distributions appear to slightly favor wavelength chunks in terms of symmetry and less scatter.
 
 \begin{figure}
     \centering
@@ -384,29 +399,35 @@ The data set used to compare against previous RV measurement methods is the same
     \label{fig:cbc-comparison}
 \end{figure}
 
+The data set used to compare against previous RV measurement methods is slightly larger than used for spectro-perfectionism: 141 observations of HD 3651 from August 2019 to January 2021. A comparison of the velocities generated using both pixel and wavelength chunks are shown in Figure \ref{fig:cbc-comparison} along with corresponding residuals to a Keplerian orbital fit. The orbital fit parameters are given in Table \ref{tab:cbc-rvs} along with a comparison to results using the forward model from Chapter \ref{forward-modeling}. SMP (single measurement precision) is the median of the RV errors and RMS is the product of the SMP and the $\chi_\mathrm{red}$ of the fit. Results between these three methods are quite similar.
+
 \begin{table}[width=\textwidth]
     \centering
-    \begin{tabular}{llll}
+    \begin{tabular}{c|ccc}
         \hline
         \hline
-        Parameter & Old CBC & New CBC & CBC WVLN \\
+        Parameter & Old CBC & Pixel CBC & Wavelength CBC \\
         \hline
-        $K$ [\ms] & & & \\
-        $P$ [days] & & & \\
-        $e$ & & & \\
-        RMS [\ms] & & & \\
+        $K$ [\ms] & $16.7 \pm 0.2$ & $16.7 \pm 0.2$ & $16.6 \pm 0.2$ \\
+        $P$ [days] & $62.29 \pm .03$ & $62.29 \pm .03$ & $62.28 \pm .03 $\\
+        $e$ & $.599 \pm .006$ & $0.579 \pm .006$ & $.577 \pm .006$ \\
+        SMP [\ms] & 0.29 & 0.23 & 0.23 \\
+        RMS [\ms] & 1.03 & 0.99 & 1.01 \\
     \end{tabular}
     \caption{Keplerian orbital parameters of HD 3651 b}
-    \label{tab:spec-perf-rvs}
+    \label{tab:cbc-rvs}
 \end{table}
 
 
-\section{Summary and Discussion} \label{pipeline2:discussion}
+\section{Discussion} \label{pipeline2:discussion}
 
-Spectro-perfectionism and \textit{B}-spline regression have both proven to be quite fruitful avenues of exploration at advancements to the EXPRES pipeline.
+Flat-relative spectro-perfectionism and \textit{B}-spline regression have both proven to be quite fruitful avenues of exploration within the EXPRES pipeline. Although their RV performance is merely on par with the pipeline's default algorithms, they have revealed a great deal of extra diagnostic information about EXPRES and especially the flat-relative optimal extraction:
+\begin{itemize}
+    \item The flat-relative PSF model has been an excellent method of detector characterization, with a much higher success rate at fitting ThAr lines than a fully two-dimensional model, enabling more complete camera focus and resolution measurements.
+    \item Spectro-perfectionism has provided an alternative method of extraction against EXPRES's default, revealing that there may be little to gain beyond the well-optimized flat-relative optimal extraction for EXPRES.
+    \item The \textit{B}-spline regression method of combining orders shows how subtle changes in dispersion across each order \textit{can} be seen in the optimal extraction.
+    \item Diagnostic plotting for the new forward model (as in Figures \ref{fig:pixel-chunk-resid} and \ref{fig:wvln-chunk-resid}) also can reveal systematic effects in certain regions of the detector.
+\end{itemize}
+Therefore, although this may not become the new defaults of the EXPRES pipeline, many of the techniques learned here will certainly be included in future iterations of the code. The algorithms themselves will also be there as optional modes of operation for anyone who is interested in further pursuing their possibilities.
 
-
-
-
-I would like to thank Joel Ong for introducing me to spectro-perfectionism and providing some of the groundwork on developing the deconvolution algorithms. I would also like to thank Adam Bolton for his conversations on this fascinating topic.
-
+I would like to thank Joel Ong for introducing me to spectro-perfectionism and providing some of the groundwork on developing the deconvolution algorithms. I would also like to thank Adam Bolton for conversations on his experiences with spectro-perfectionism.
