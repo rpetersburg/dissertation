@@ -28,7 +28,7 @@ Owing to various changes to the hardware configuration during commissioning, we 
 
 \begin{table}[ht!]
 \centering
-\caption{Instrumental Epochs\label{tab:epochs}}
+\caption[EXPRES Instrumental Epochs]{Instrumental Epochs\label{tab:epochs}}
 \begin{tabular}{cccl}
 \hline
 Epoch & Start & End & Changes before Epoch Start \tabularnewline
@@ -62,7 +62,7 @@ Barycentric corrections are derived from the EXPRES exposure meter, a $R\approx1
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-4/pipeline}
-    \caption{Data flow for the EXPRES pipeline. Small black boxes represent different kinds of exposures (if in blue boxes) or different data associated with an exposure (if in green boxes). Double-boxes indicate finished data products, ready for use in subsequent science analysis.\label{fig:flowchart}}
+    \caption[Data flow for the EXPRES pipeline]{Data flow for the EXPRES pipeline. Small black boxes represent different kinds of exposures (if in blue boxes) or different data associated with an exposure (if in green boxes). Double-boxes indicate finished data products, ready for use in subsequent science analysis.\label{fig:flowchart}}
 \end{figure}
 
 The EXPRES pipeline is written in Python and makes heavy use of the SciPy stack \citep{virtanen_scipy_2020}. We show a schematic representation of it in Figure \ref{fig:flowchart}. In brief, the following steps are taken:
@@ -115,7 +115,7 @@ The mean and subsequent spline fit for the overscan regions of a single amplifie
     \centering
     \includegraphics{figures-4/ser_oscan}
     \includegraphics{figures-4/vert_oscan}
-    \caption{Bias approximation using the serial and parallel overscans. The mean and subsequent smoothed mean for each overscan are shown in blue and orange, respectively. Note that the counts shown in the parallel overscan were first subtracted by the first 20 rows of the serial overscan smoothed mean, generating values close to zero.}
+    \caption[EXPRES detector bias approximation from overscan regions]{Bias approximation using the serial and parallel overscans. The mean and subsequent smoothed mean for each overscan are shown in blue and orange, respectively. Note that the counts shown in the parallel overscan were first subtracted by the first 20 rows of the serial overscan smoothed mean, generating values close to zero.}
     \label{fig:overscan}
 \end{figure}
 
@@ -165,7 +165,7 @@ Finally, we smooth the best-fit values for $A$, $d$, and $\sigma$ along each ord
 \begin{figure}
 \centering
 \includegraphics{figures-4/flats}
-\caption{Example cross-dispersion, cross-section of an extended flat as compared to a science flat. The best fit of Equation \ref{eq:psf} is given for the extended flat. The resultant quantum efficiency (QE) corrections are shown in the lower plot and the bounds of the corrected region are demarcated. Note that these are corrections \textit{relative} to the mean QE. The QE corrected science flat is also shown in the upper plot.}\label{fig:flats}
+\caption[Extended flat quantum efficiency correction]{Example cross-dispersion, cross-section of an extended flat as compared to a science flat. The best fit of Equation \ref{eq:psf} is given for the extended flat. The resultant quantum efficiency (QE) corrections are shown in the lower plot and the bounds of the corrected region are demarcated. Note that these are corrections \textit{relative} to the mean QE. The QE corrected science flat is also shown in the upper plot.}\label{fig:flats}
 \end{figure}
 
 We only use pixels along the approximately flat portion of the extended slit in this constructed smooth profile. This decision was made for two reasons:
@@ -192,7 +192,7 @@ The orders of the echellogram are traced using the reduced science flat frame. F
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-4/scat_light.pdf}
-    \caption{In the upper plot, two-dimensional scattered light approximation for reduced and median-combined science flat frames taken on 2019 October 24 are shown. The scales for the two images are not matched in order to emphasize the scattered light. The cross section of a single column (4000) for both the spectrum and calculated scattered light is shown in the lower plot. Note that the range of traced orders sets the upper and lower limits of the calculated scattered light.}
+    \caption[EXPRES scattered light approximation]{In the upper plot, two-dimensional scattered light approximation for reduced and median-combined science flat frames taken on 2019 October 24 are shown. The scales for the two images are not matched in order to emphasize the scattered light. The cross section of a single column (4000) for both the spectrum and calculated scattered light is shown in the lower plot. Note that the range of traced orders sets the upper and lower limits of the calculated scattered light.}
     \label{fig:scattered_light}
 \end{figure}
 
@@ -207,7 +207,7 @@ The two-dimensional scattered light image is generated through a quadratic inter
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{figures-4/extraction.pdf}
-    \caption{Section of raw images for a science exposure (above; HD 217014), laser frequency comb (middle), and calibration flat (below) taken with EXPRES on 24 October 2019. The extraction aperture for our optimal extraction of echelle order 100 is shown on the flat images as the intersection of the traced order (with vertical extent of 33 pixels) and the single-column slit at $x = 1460$, both shown in blue. The reduced counts in the extraction aperture for each image (i.e. removing hot pixels and QE variations) are shown in the right panels, as a function of pixel row position $y$.}
+    \caption[EXPRES order cross-sections]{Section of raw images for a science exposure (above; HD 217014), laser frequency comb (middle), and calibration flat (below) taken with EXPRES on 24 October 2019. The extraction aperture for our optimal extraction of echelle order 100 is shown on the flat images as the intersection of the traced order (with vertical extent of 33 pixels) and the single-column slit at $x = 1460$, both shown in blue. The reduced counts in the extraction aperture for each image (i.e. removing hot pixels and QE variations) are shown in the right panels, as a function of pixel row position $y$.}
     \label{fig:extraction}
 \end{figure*}
 
@@ -259,7 +259,7 @@ Removal of the blaze through method (2) can be na\"{i}vely understood by recogni
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-4/continuum.pdf}
-    \caption{Flat-relative optimally extracted flux (black) and associated calculated continua (red) for three orders from HD 217014 observed on 2019 October 24. All continua were calculated using a linear model. Notice that the spectral flux relative to the flat-fielding LED source flux is significantly different between orders, but the resultant continuum across each order varies slowly enough to remain essentially linear.}
+    \caption[EXPRES flat-relative optimale extraction and continuum normalization]{Flat-relative optimally extracted flux (black) and associated calculated continua (red) for three orders from HD 217014 observed on 2019 October 24. All continua were calculated using a linear model. Notice that the spectral flux relative to the flat-fielding LED source flux is significantly different between orders, but the resultant continuum across each order varies slowly enough to remain essentially linear.}
     \label{fig:continuum}
 \end{figure}
 
@@ -287,7 +287,7 @@ For any given LFC exposure, the locations of modes are identified by fitting Gau
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth]{figures-4/drift.pdf}
-    \caption{Calibration drift over the course of a single night (2019 October 24) for the LFC-constrained region of the echellogram, plotted in terms of the absolute echelle order number and the pixel column of the CCD. The average calibration drift for the whole night ($\sim$4.0\ms) is of similar magnitude to local variations in the drift; therefore using a single average velocity offset would necessarily incur significant additional calibration error. In other words, the wavelength solution along the left and right edges of the shown spectral format would be offset by -4.0 and +4.0\ms respectively, if a single velocity offset was used. Spectral lines used for radial-velocity solutions (shown as white dots drawn from the ESPRESSO G2 linelist) sample the detector in a nonuniform fashion and result in different overall velocity offsets, depending on spectral type.}
+    \caption[EXPRES wavelength calibration drift]{Calibration drift over the course of a single night (2019 October 24) for the LFC-constrained region of the echellogram, plotted in terms of the absolute echelle order number and the pixel column of the CCD. The average calibration drift for the whole night ($\sim$4.0\ms) is of similar magnitude to local variations in the drift; therefore using a single average velocity offset would necessarily incur significant additional calibration error. In other words, the wavelength solution along the left and right edges of the shown spectral format would be offset by -4.0 and +4.0\ms respectively, if a single velocity offset was used. Spectral lines used for radial-velocity solutions (shown as white dots drawn from the ESPRESSO G2 linelist) sample the detector in a nonuniform fashion and result in different overall velocity offsets, depending on spectral type.}
     \label{fig:caldrift}
 \end{figure}
 
@@ -345,7 +345,7 @@ First, we construct a spectral template for each stellar target. An ideal templa
 \begin{figure}
     \centering
     \includegraphics[trim=5cm 3cm 3cm 4cm, clip, width=\textwidth]{figures-4/morph_fit.pdf}
-    \caption{High-resolution, high-S/N NSO spectrum (red dashed line) is shifted and cubic-spline interpolated to the wavelength scale of a program observation (upper black line). The difference spectrum (bottom black line) is used to identify discrepancies between the spectra above the photon-noise threshold (bottom blue line). A Levenburg--Marquardt algorithm drives the growth of pseudo-lines until the NSO spectrum has morphed to the match the spectrum of the program star (solid red line). This morphed spectrum is then used as a template for forward modeling.}
+    \caption[NSO template for forward modeling]{High-resolution, high-S/N NSO spectrum (red dashed line) is shifted and cubic-spline interpolated to the wavelength scale of a program observation (upper black line). The difference spectrum (bottom black line) is used to identify discrepancies between the spectra above the photon-noise threshold (bottom blue line). A Levenburg--Marquardt algorithm drives the growth of pseudo-lines until the NSO spectrum has morphed to the match the spectrum of the program star (solid red line). This morphed spectrum is then used as a template for forward modeling.}
     \label{fig:morph}
 \end{figure}
 
@@ -393,13 +393,13 @@ We now present velocities derived with this pipeline based on 47 observations of
     \centering
     \includegraphics{figures-4/217014_ccf.pdf}
     \includegraphics{figures-4/217014_cbc.pdf}
-    \caption{Phased radial velocities, Keplerian orbital fits, and residuals for EXPRES observations of 51 Peg b. The figure is labeled with the RMS residual to the fitted orbital solution, as well as the median formal error $\sigma_v$ of all data points shown.}
+    \caption[51 Peg b -- radial velocities and Keplerian orbital fits]{Phased radial velocities, Keplerian orbital fits, and residuals for EXPRES observations of 51 Peg b. The figure is labeled with the RMS residual to the fitted orbital solution, as well as the median formal error $\sigma_v$ of all data points shown.}
     \label{fig:217014}
 \end{figure}
 
 \begin{table}[ht!]
     \centering
-    \caption{EXPRES commissioning RVs of 51 Peg (full data set available online)
+    \caption[51 Peg -- Commissioning radial velocities]{EXPRES commissioning RVs of 51 Peg (full data set available online)
     \label{tab:51pegvels}}
     \begin{tabular}{ccccc}
         \hline
@@ -420,7 +420,7 @@ Figure \ref{fig:217014} shows the resulting radial velocities from both the CCF 
 
 \begin{table}[ht!]
 \centering
-\caption{Fit parameters for 51 Peg b\label{tab:51peg}}
+\caption[51 Peg b -- Keplerian orbital fit parameters]{Fit parameters for 51 Peg b\label{tab:51peg}}
 \begin{tabular}{cccccc}
 \hline
 Instr. & $K/\ms$ & $e$ & RMS$/\ms$ & $\sigma_v/\ms$ \tabularnewline
@@ -455,7 +455,7 @@ These assumptions are borne out in Figure \ref{fig:snr}, showing these formal er
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-4/err_vs_snr.pdf}
-    \caption{Formal RV errors returned from both RV fitting procedures, plotted against the per-pixel S/N (as a characterization of photon noise) for velocities from Section \ref{initial-results}. EXPRES's target S/N of 250 is shown with a vertical line and the approximate associated formal error of 30\cms is shown with a horizontal line. Note that data here with S/N less than 160 are not included in Figure \ref{fig:217014}.}
+    \caption[EXPRES formal radial velocity errors]{Formal RV errors returned from both RV fitting procedures, plotted against the per-pixel S/N (as a characterization of photon noise) for velocities from Section \ref{initial-results}. EXPRES's target S/N of 250 is shown with a vertical line and the approximate associated formal error of 30\cms is shown with a horizontal line. Note that data here with S/N less than 160 are not included in Figure \ref{fig:217014}.}
     \label{fig:snr}
 \end{figure}
 
@@ -473,7 +473,7 @@ In Figure \ref{fig:orders}, we show the RMS residuals from the orbital solutions
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{figures-4/vel_orders_217014.pdf}
-\caption{RMS scatter from orbital solutions fitted to HD 217014 as a function of bluest and reddest echelle order included in the CCF computation. Points along each diagonal indicate sets of velocities computed with the same number of echelle orders. At least 10 echelle orders have been included in all CCF computations. Dotted red lines show the default parameters used in the preceding sections.\label{fig:orders}}
+\caption[Cross-correlation order range optimization]{RMS scatter from orbital solutions fitted to HD 217014 as a function of bluest and reddest echelle order included in the CCF computation. Points along each diagonal indicate sets of velocities computed with the same number of echelle orders. At least 10 echelle orders have been included in all CCF computations. Dotted red lines show the default parameters used in the preceding sections.\label{fig:orders}}
 \end{figure}
 
 For this data set, we see that there is a sharp dependence on the bluest order co-added into the CCF. Moreover, we see that the introduction of orders redder than the LFC cutoff also slightly increases the RMS error to the fit. Recalling that the wavelength solution outside of the LFC region is largely constrained by the ThAr lamp, this potentially implies a calibration offset between the LFC and the ThAr lamp, despite both sources illuminating the instrument through the same fiber.

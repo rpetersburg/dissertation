@@ -126,7 +126,7 @@ Measurement of an \'{e}chelle spectrograph PSF requires a sparse emission line s
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-5/expres-psf.pdf}
-    \caption{Fit PSF model and residuals (along with corresponding $\chi^2$) using both the two-dimensional model (Equation \ref{eq:expres_psf}) and the flat-relative model (Equation \ref{eq:flat-relative-psf}).}
+    \caption[EXPRES point spread function model]{Fit PSF model and residuals (along with corresponding $\chi^2$) using both the two-dimensional model (Equation \ref{eq:expres_psf}) and the flat-relative model (Equation \ref{eq:flat-relative-psf}).}
     \label{fig:psf-resid}
 \end{figure}
 
@@ -141,14 +141,14 @@ This code is relatively fast, able to map the PSF from a single image in less th
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-5/psf-params-2d.pdf}
-    \caption{PSF parameters from Equation \ref{eq:expres_psf} mapped across the detector using a ThAr observation from October 24, 2020. 1736 lines were fit using this method. Residuals from the 2D polynomial regression are presented alongside the parameters.}
+    \caption[EXPRES two-dimensional point spread function model parameters]{PSF parameters from Equation \ref{eq:expres_psf} mapped across the detector using a ThAr observation from October 24, 2020. 1736 lines were fit using this method. Residuals from the 2D polynomial regression are presented alongside the parameters.}
     \label{fig:psf-params-2d}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-5/psf-params-1d.pdf}
-    \caption{PSF parameters from Equation \ref{eq:flat-relative-psf} mapped across the detector using a ThAr observation from October 24, 2020. 4367 lines were fit using this method. Residuals from the 2D polynomial regression are presented alongside the parameters.}
+    \caption[EXPRES flat-relative point spread function model parameters]{PSF parameters from Equation \ref{eq:flat-relative-psf} mapped across the detector using a ThAr observation from October 24, 2020. 4367 lines were fit using this method. Residuals from the 2D polynomial regression are presented alongside the parameters.}
     \label{fig:psf-params-1d}
 \end{figure}
 
@@ -184,7 +184,7 @@ the spectra are clearly affected by this technique. Although the residuals are a
     \centering
     \includegraphics[width=\textwidth]{figures-5/spec-perf-ringing-1.pdf}
     \includegraphics[width=\textwidth]{figures-5/spec-perf-ringing-2.pdf}
-    \caption{HD 3651, absolute order 60, extracted by spectro-perfectionism over the full order as well as in 1000 pixel chunks padded by 200 pixels. The full order (top) and a zoomed region near one of the chunk boundaries (bottom) are shown. Ringing artifacts especially around the intersection points of adjacent chunks (marked by gray dashed lines) are readily apparent in the normalized residuals.}
+    \caption[Ringing artifacts from chunked spectro-perfectionism]{HD 3651, absolute order 60, extracted by spectro-perfectionism over the full order as well as in 1000 pixel chunks padded by 200 pixels. The full order (top) and a zoomed region near one of the chunk boundaries (bottom) are shown. Ringing artifacts especially around the intersection points of adjacent chunks (marked by gray dashed lines) are readily apparent in the normalized residuals.}
     \label{fig:spec-perf-ringing}
 \end{figure}
 
@@ -204,7 +204,7 @@ Using Equation \ref{eq:spec-perf-resid}, the modelling performance on a single o
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-5/extraction-residuals.pdf}
-    \caption{Pixel-by-pixel extraction residuals for a section of relative order 60 of an observation of HD 3651 on October 24, 2020 (top) using both spectro-perfectionism (middle) and optimal extraction (bottom). Residuals here are normalized by the estimated noise model for each pixel.}
+    \caption[Spectro-perfectionism pixel-wise extraction residuals]{Pixel-by-pixel extraction residuals for a section of relative order 60 of an observation of HD 3651 on October 24, 2020 (top) using both spectro-perfectionism (middle) and optimal extraction (bottom). Residuals here are normalized by the estimated noise model for each pixel.}
     \label{fig:extraction-residuals}
 \end{figure}
 
@@ -213,7 +213,7 @@ The similarities between spectro-perfectionism and optimal extraction also exten
 \begin{figure}
     \centering
     \includegraphics{figures-5/spec-perf-vs-optimal.pdf}
-    \caption{Comparison of spectro-perfectionism against optimal extraction for an extracted spectrum using the same data as in Figure \ref{fig:extraction-residuals}.}
+    \caption[Spectro-perfectionism vs. optimal extraction -- Stellar spectrum]{Comparison of spectro-perfectionism against optimal extraction for an extracted spectrum using the same data as in Figure \ref{fig:extraction-residuals}.}
     \label{fig:spec-perf-vs-optimal}
 \end{figure}
 
@@ -222,14 +222,14 @@ Differences in the method are much more apparent, however, when extracting obser
 \begin{figure}
     \centering
     \includegraphics{figures-5/spec-perf-vs-optimal-lfc.pdf}
-    \caption{Comparison of spectro-perfectionism against optimal extraction for an extracted spectrum of an LFC, taken on the same date as the data in Figure \ref{fig:spec-perf-vs-optimal}.}
+    \caption[Spectro-perfectionism vs. optimal extraction -- Laser frequency comb spectrum]{Comparison of spectro-perfectionism against optimal extraction for an extracted spectrum of an LFC, taken on the same date as the data in Figure \ref{fig:spec-perf-vs-optimal}.}
     \label{fig:spec-perf-vs-optimal-lfc}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics{figures-5/spec-perf-rvs.pdf}
-    \caption{RVs generated from the EXPRES pipeline after using both optimal extraction (top) and spectro-perfectionism (middle) on a series of HD 3651 observations. Residuals from fit Keplerian models for each set of RVs are shown in the bottom plot.}
+    \caption[Spectro-perfectionism vs. optimal extraction -- HD 3651 radial velocities]{RVs generated from the EXPRES pipeline after using both optimal extraction (top) and spectro-perfectionism (middle) on a series of HD 3651 observations. Residuals from fit Keplerian models for each set of RVs are shown in the bottom plot.}
     \label{fig:spec-perf-rvs}
 \end{figure}
 
@@ -246,7 +246,7 @@ Differences in the method are much more apparent, however, when extracting obser
         SMP [\ms] & 0.30 & 0.32 \\
         RMS [\ms] & 1.13 & 1.12 \\
     \end{tabular}
-    \caption{Keplerian orbital parameters of HD 3651 b}
+    \caption[HD 3651 -- Keplerian orbital parameter comparison (extraction method)]{Keplerian orbital parameters of HD 3651 b}
     \label{tab:spec-perf-rvs}
 \end{table}
 
@@ -256,7 +256,7 @@ Regardless, the ultimate test of spectro-perfectionism is its ability to produce
 
 As demonstrated in this section, flat-relative spectro-perfectionism has been quite the double-edged sword. The flat-relative PSF model proved to be quite successful at fitting the EXPRES PSF with significantly fewer parameters than the two-dimensional model while still providing a smoothly varying structure across the detector. Unfortunately, the minimal improvements to speed and complexity using this method are then far outweighted by the pure computation power required to re-convolve individual orders simultaneous, which is shown to be superior to chunking. Thirty seconds per order over 86 orders leading to 45+ minute extraction times is simply too much to adequately test and verify this method, especially with dozens of new observations coming in each day. Also, although stellar spectra are very similar to those from optimal extraction and LFCs are extracted at higher resolution and signal-to-noise, ringing artifacts still come into play for high contrast spectral regions. Finally, the improvement to RVs over optimal extraction is minimal, but at least shows that spectro-perfectionism is at least on par with trusted methods.
 
-This all being said, I would not recommend spectro-perfectionism as a one-to-one replacement for optimal extraction, since it increases computational complexity with minimal improvement to results. However, there are multiple avenues of exploration and further improvements that I believe can bring spectro-perfectionism into the mainstream.
+This all being said, I would not recommend spectro-perfectionism as a one-to-one replacement for optimal extraction, since it increases computational complexity with minimal improvement to RV results. However, there are multiple avenues of exploration and further improvements that I believe can bring spectro-perfectionism into the mainstream.
 
 Speed-up of the re-convolution is an obvious angle. SciPy's sparse package provides a 20\% increase in speed over other SciPy linear algebra functions, but I have yet to find anything faster. I have also looked into iterative deconvolution methods such as Gold deconvolution \citep{morhac_efficient_2003, morhac_deconvolution_2006} that preclude the need for re-convolution due to strong assumptions of positive-definiteness in the matrices. However, due to the potentially large number of iterations required to reach a stable solution, these methods sometimes take even longer. Better optimization through parallelization may also be a possibility. Regardless, further research here should absolutely be prioritized.
 
@@ -290,7 +290,7 @@ An important property of the flat-relative optimal extraction used in the EXPRES
     \centering
     \includegraphics[width=\textwidth]{figures-5/cont-norm-bspline.pdf}
     \includegraphics[width=\textwidth]{figures-5/cont-norm-bspline-oxygen.pdf}
-    \caption{Iterative technique of absorption line rejection using a full-spectrum \textit{B}-spline regression shown for two separate regions of an HD 3651 spectrum. The bottom plot specifically shows the oxygen a-band, Which crosses between \'echelle orders 80 and 81, and is well-characterized by the \textit{B}-spline continuum.}
+    \caption[Continuum normalization iterative absorption line rejection]{Iterative technique of absorption line rejection using a full-spectrum \textit{B}-spline regression shown for two separate regions of an HD 3651 spectrum. The bottom plot specifically shows the oxygen a-band, Which crosses between \'echelle orders 80 and 81, and is well-characterized by the \textit{B}-spline continuum.}
     \label{fig:cont-norm-bspline}
 \end{figure}
 
@@ -313,7 +313,7 @@ Barycentric correction (1) is an inherent part of the pipeline so these large of
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-5/stellar-template.pdf}
-    \caption{Portion of a stellar template generated from 95 observations of HD 3651. The tellurics are left in the data to demonstrate how they do not effect the eventual template.}
+    \caption[HD 3651 stellar template]{Portion of a stellar template generated from 95 observations of HD 3651. The tellurics are left in the data to demonstrate how they do not effect the eventual template.}
     \label{fig:stellar-template}
 \end{figure}
 
@@ -328,7 +328,7 @@ An important caveat to the use of a spectrum continuously, rather than order-wis
 \begin{figure}
     \centering
     \includegraphics{figures-5/order-matching.pdf}
-    \caption{Overlapping spectral orders of an observation of HD 3651 and the resultant residuals to the \textit{B}-spline regression. Each \'{e}chelle order in the residual plot is colored differently to emphasize the trend. This effect is seen for all observations made with EXPRES, including wavelength calibrations.}
+    \caption[Stellar template overlapping orders]{Overlapping spectral orders of an observation of HD 3651 and the resultant residuals to the \textit{B}-spline regression. Each \'{e}chelle order in the residual plot is colored differently to emphasize the trend. This effect is seen for all observations made with EXPRES, including wavelength calibrations.}
     \label{fig:order-matching}
 \end{figure}
 
@@ -347,7 +347,7 @@ This final point is most critical to the new implementation; since the \textit{B
 \begin{figure}
     \centering
     \includegraphics{figures-5/chunk-vels.pdf}
-    \caption{Demonstration of chunk velocities for an observation of HD 3651 taken on October 24, 2020 using both pixel-chunks (top) and wavelength-chunks (bottom).}
+    \caption[HD 3651 forward model chunk velocities]{Demonstration of chunk velocities for an observation of HD 3651 taken on October 24, 2020 using both pixel-chunks (top) and wavelength-chunks (bottom).}
     \label{fig:chunk-vels}
 \end{figure}
 
@@ -363,21 +363,21 @@ Masked residual outliers in the spectrum typically come from improper telluric m
 \begin{figure}
     \centering
     \includegraphics{figures-5/pixel-chunk-resid.pdf}
-    \caption{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using pixel chunks.}
+    \caption[Forward model chunk velocity offsets and reduced $\chi$ metrics -- pixel chunks]{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using pixel chunks.}
     \label{fig:pixel-chunk-resid}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics{figures-5/wvln-chunk-resid.pdf}
-    \caption{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using wavelength chunks.}
+    \caption[Forward model chunk velocity offsets and reduced $\chi$ metrics -- wavelength chunks]{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using wavelength chunks.}
     \label{fig:wvln-chunk-resid}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics{figures-5/cbc-hist.pdf}
-    \caption{Histograms for the distribution of chunk velocities calculated using pixel (top) and wavelength (bottom) chunk both with and without residual velocity corrections. These are variance weighted histograms, meaning the contribution of a single velocity is weighted by its posterior variance.}
+    \caption[Chunk velocity distribution with and without correction]{Histograms for the distribution of chunk velocities calculated using pixel (top) and wavelength (bottom) chunk both with and without residual velocity corrections. These are variance weighted histograms, meaning the contribution of a single velocity is weighted by its posterior variance.}
     \label{fig:cbc-hist}
 \end{figure}
 
@@ -395,7 +395,7 @@ An example of the systematic velocity offsets and reduced $\chi$ metric for each
 \begin{figure}
     \centering
     \includegraphics{figures-5/cbc-comparison.pdf}
-    \caption{Comparison of the two chunk-by-chunk velocities and corresponding residuals to a Keplerian orbital fit.}
+    \caption[Keplerian orbital fit comparison between chunk methods]{Comparison of the two chunk-by-chunk velocities and corresponding residuals to a Keplerian orbital fit.}
     \label{fig:cbc-comparison}
 \end{figure}
 
@@ -414,7 +414,7 @@ The data set used to compare against previous RV measurement methods is slightly
         SMP [\ms] & 0.29 & 0.23 & 0.23 \\
         RMS [\ms] & 1.03 & 0.99 & 1.01 \\
     \end{tabular}
-    \caption{Keplerian orbital parameters of HD 3651 b}
+    \caption[HD 3651 -- Keplerian orbital parameter comparison (chunk method)]{Keplerian orbital parameters of HD 3651 b}
     \label{tab:cbc-rvs}
 \end{table}
 

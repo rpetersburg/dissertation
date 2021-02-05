@@ -49,7 +49,7 @@ where $A$ is the cross-sectional area of the fiber and $C_{s}$ is a constant coe
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/fiber_example.pdf}
-	\caption{Examples of unmitigated modal noise for a \SI{200}{\micro\meter} circular (left), \SI{200}{\micro\meter} octagonal (middle), and \SI{100x300}{\micro\meter} rectangular (right) optical fiber. All three fibers shown here have approximately the same cross-sectional area, meaning that they each are propagating about the same number of electromagnetic modes (see Equation (\ref{eq:mode_area})). Brightness in this image is scaled by (photon count)$^{0.6}$ for better presentation of the range of speckle brightness. The contrast of the speckles is therefore \textit{worse} than what is shown here.}
+	\caption[Fiber faces affected by modal noise]{Examples of unmitigated modal noise for a \SI{200}{\micro\meter} circular (left), \SI{200}{\micro\meter} octagonal (middle), and \SI{100x300}{\micro\meter} rectangular (right) optical fiber. All three fibers shown here have approximately the same cross-sectional area, meaning that they each are propagating about the same number of electromagnetic modes (see Equation (\ref{eq:mode_area})). Brightness in this image is scaled by (photon count)$^{0.6}$ for better presentation of the range of speckle brightness. The contrast of the speckles is therefore \textit{worse} than what is shown here.}
 \label{fig:fiber_example}
 \end{figure}
 
@@ -151,7 +151,7 @@ The number of modes a fiber supports is largely determined by its cross-sectiona
 \begin{table}
 \centering
 \begin{threeparttable}
-\caption{Tested Optical Fibers.}
+\caption[Modal noise tested optical fibers]{Tested Optical Fibers.}
 	\begin{tabular}{lll}
 	\hline
 	Shape & Size & Manufacturer \\
@@ -173,7 +173,7 @@ The number of modes a fiber supports is largely determined by its cross-sectiona
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/agitators_labelled.pdf}
-	\caption{Laboratory images of the linear and circular agitator used in these modal noise tests attached to the \SI{100x300}{\micro\meter} rectangular fiber. The linear agitator rotates a variable-amplitude arm parallel to the fiber while the circular agitator rotates perpendicular to the fiber. A small counterweight keeps a minimal amount of tension in the fiber and prevents it from over-bending or bunching up. The inset in the bottom left contains a PASCO Scientific economy wave driver (``tweeter'') attached to an optical fiber. The tweeter is used to test high-frequency, low-amplitude agitation.}
+	\caption[Photograph of modal noise testing equipment]{Laboratory images of the linear and circular agitator used in these modal noise tests attached to the \SI{100x300}{\micro\meter} rectangular fiber. The linear agitator rotates a variable-amplitude arm parallel to the fiber while the circular agitator rotates perpendicular to the fiber. A small counterweight keeps a minimal amount of tension in the fiber and prevents it from over-bending or bunching up. The inset in the bottom left contains a PASCO Scientific economy wave driver (``tweeter'') attached to an optical fiber. The tweeter is used to test high-frequency, low-amplitude agitation.}
 \label{fig:agitators}
 \end{figure}
 
@@ -186,7 +186,7 @@ All image data is collected with the Fiber Characterization Station (FCS, Figure
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/fcs_schematic.pdf}
-	\caption{Schematic of the Fiber Characterization Station. Our choice of light source is fed into the station in the bottom left. This light is spatially filtered at focus, collimated (with optional iris for NA selection), and finally injected into the test fiber as a \SI{10}{\micro\meter} spot. The injection face of the test fiber is imaged at $10\times$ magnification by the input camera to allow for precision alignment. Light propagates through the test fiber and our choice of agitator mixes the modes. A cartoon of the three types of agitation (see Figure \ref{fig:agitators}) is presented above the schematic. Light is then ejected from the test fiber and split between the $10\times$ magnified near-field camera and the far-field camera.}
+	\caption[Schematic of the Fiber Characterization Station]{Schematic of the Fiber Characterization Station. Our choice of light source is fed into the station in the bottom left. This light is spatially filtered at focus, collimated (with optional iris for NA selection), and finally injected into the test fiber as a \SI{10}{\micro\meter} spot. The injection face of the test fiber is imaged at $10\times$ magnification by the input camera to allow for precision alignment. Light propagates through the test fiber and our choice of agitator mixes the modes. A cartoon of the three types of agitation (see Figure \ref{fig:agitators}) is presented above the schematic. Light is then ejected from the test fiber and split between the $10\times$ magnified near-field camera and the far-field camera.}
 \label{fig:fcs}
 \end{figure}
 
@@ -220,7 +220,7 @@ Multiple images are taken (1) to reduce statistical errors in our S/N calculatio
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/fiber_improved.pdf}
-	\caption{10-rotation, coupled agitation images using the same three fibers shown in Figure \ref{fig:fiber_example}.  The diffraction pattern is clearly seen, but otherwise, the presence of speckles in these images is significantly diminished. Brightness is directly scaled with photon count in these images.}
+	\caption[Fiber faces with mitigated modal noise]{10-rotation, coupled agitation images using the same three fibers shown in Figure \ref{fig:fiber_example}.  The diffraction pattern is clearly seen, but otherwise, the presence of speckles in these images is significantly diminished. Brightness is directly scaled with photon count in these images.}
 \label{fig:fiber_improved}
 \end{figure}
 
@@ -246,14 +246,14 @@ Far-field images are taken for each data set and analyzed using the maximum inte
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/ag_snr.pdf}
-	\caption{S/N comparison for varying fiber geometries and large-amplitude agitation methods. The S/N is presented for both single-rotation and 10-rotation images.}
+	\caption[Signal-to-noise comparison across fiber geometry and agitation method]{S/N comparison for varying fiber geometries and large-amplitude agitation methods. The S/N is presented for both single-rotation and 10-rotation images.}
 \label{fig:ag_snr}
 \end{figure}
 
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/rect_snr_vs_time.pdf}
-	\caption{S/N dependence on number of rotations for the \SI{100x300}{\micro\meter} rectangular fiber using various agitation methods. We find similar relationships for the all of the remaining fiber shapes and sizes.}
+	\caption[Signal-to-noise comparison across number of rotations and agitation method]{S/N dependence on number of rotations for the \SI{100x300}{\micro\meter} rectangular fiber using various agitation methods. We find similar relationships for the all of the remaining fiber shapes and sizes.}
 \label{fig:rect_snr_vs_time}
 \end{figure}
 
@@ -271,7 +271,7 @@ To better understand why coupled agitation is more effective at reducing modal n
 \begin{figure*}[t]
 \centering
 	\includegraphics[width=\textwidth]{figures-2/amp_freq_snr.pdf}
-	\caption{S/N comparison for varying amplitudes using the linear agitator (left) and varying frequencies using each of the linear (center) and circular (right) agitators.}
+	\caption[Signal-to-noise comparison across amplitude and mode of agitation]{S/N comparison for varying amplitudes using the linear agitator (left) and varying frequencies using each of the linear (center) and circular (right) agitators.}
 \label{fig:amp_freq_snr}
 \end{figure*}
 
@@ -282,7 +282,7 @@ Results from these tests are shown in Figure \ref{fig:amp_freq_snr}. There is a 
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/tweeter_snr.pdf}
-	\caption{S/N comparison when adding a tweeter to the coupled agitation method for the \SI{100x300}{\micro\meter} rectangular fiber.}
+	\caption[Signal-to-noise comparison with tweeter]{S/N comparison when adding a tweeter to the coupled agitation method for the \SI{100x300}{\micro\meter} rectangular fiber.}
 \label{fig:tweeter_snr}
 \end{figure}
 
@@ -316,7 +316,7 @@ To study the effects of such an architecture, we agitate individual fibers in a 
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/coupled_fibers.pdf}
-	\caption{S/N for various arrangements of coupled fibers with varying core diameter and cross-sectional shape. All fibers can be assumed circular unless otherwise stated. The S/N for a single \SI{200}{\micro\meter} circular fiber is also presented for both the singe-rotation (dashed) and 10-rotation (solid) images.}
+	\caption[Signal-to-noise comparison across fiber shapes]{S/N for various arrangements of coupled fibers with varying core diameter and cross-sectional shape. All fibers can be assumed circular unless otherwise stated. The S/N for a single \SI{200}{\micro\meter} circular fiber is also presented for both the singe-rotation (dashed) and 10-rotation (solid) images.}
 \label{fig:coupled_fibers}
 \end{figure}
 
@@ -353,7 +353,7 @@ Coupled fiber test cases with light loss due to improperly matched \'etendue, su
 \begin{figure*}
 \centering
 	\includegraphics[width=\textwidth]{figures-2/rv_error.pdf}
-	\caption{Centroid drift and resultant RV error for a fiber moved by a simulated telescope (first), slowly agitated fiber (second), coupled agitated fiber (third), and LED illumination (fourth). Each line represents a different exposure time each with their own calculated RV error. Note that the scale for the top three plots are different.}
+	\caption[Radial velocity error with and without fiber agitation]{Centroid drift and resultant RV error for a fiber moved by a simulated telescope (first), slowly agitated fiber (second), coupled agitated fiber (third), and LED illumination (fourth). Each line represents a different exposure time each with their own calculated RV error. Note that the scale for the top three plots are different.}
 \label{fig:rv_error}
 \end{figure*}
 
@@ -419,7 +419,7 @@ Although it has been shown by \citet{sablowski_comparing_2016} that their agitat
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/frd_input_output.pdf}
-	\caption{Relationship of the input and output focal ratios for the {\SI{100x300}{\micro\meter}} rectangular fiber both with and without agitation.}
+	\caption[Focal ratio degradation with and without fiber agitation]{Relationship of the input and output focal ratios for the {\SI{100x300}{\micro\meter}} rectangular fiber both with and without agitation.}
 \label{fig:frd}
 \end{figure}
 
@@ -431,7 +431,7 @@ The results for this test are shown in Figure {\ref{fig:frd}}. Across all three 
 \begin{figure}
 \centering
 	\includegraphics[width=\columnwidth]{figures-2/fiber_rv_error.pdf}
-	\caption{Comparison of the long-term agitation methods used in Section \ref{sec:rv_precision}---slow agitation (left), coupled agitation (middle), LED source (right)---as \SI{10}{\second} exposures. Brightness directly scales with photon count in these images.}
+	\caption[Comparison of long-term agitation methods]{Comparison of the long-term agitation methods used in Section \ref{sec:rv_precision}---slow agitation (left), coupled agitation (middle), LED source (right)---as \SI{10}{\second} exposures. Brightness directly scales with photon count in these images.}
 \label{fig:fiber_rv_error}
 \end{figure}
 
@@ -450,7 +450,7 @@ It is important to note that there has not yet been a long-term study on how sha
 \begin{figure}
     \centering
     \includegraphics[width=0.75\textwidth]{figures-2/agitator.jpg}
-    \caption{Picture of the agitator installed with EXPRES at the Lowell Discovery Telescope. The fiber is restrained by rubber bands in this image, but a recent update replaced those with longer-lasting springs. Also, the white arms of the agitator have been replaced by disks with radii equal to the length of the arms. These disks prevent the optical fiber from getting caught on the motor shafts.}
+    \caption[The EXPRES fiber agitator]{Picture of the agitator installed with EXPRES at the Lowell Discovery Telescope. The fiber is restrained by rubber bands in this image, but a recent update replaced those with longer-lasting springs. Also, the white arms of the agitator have been replaced by disks with radii equal to the length of the arms. These disks prevent the optical fiber from getting caught on the motor shafts.}
     \label{fig:agitator}
 \end{figure}
 
@@ -459,7 +459,7 @@ As part of the EXPRES fiber architecture, we have employed a modal-noise mitigat
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{figures-2/lfc_agitator_comp.pdf}
-    \caption{Comparison of instrument stability from cross-correlating LFC exposures without fiber agitation (left) and with fiber agitation (right). Fiber agitation improves the velocity scatter by a factor on the order of 10, reducing this error source to a level below a few cm s$^{-1}$. \citep[Image and caption reprinted from][]{blackman_performance_2020}}
+    \caption[EXPRES stability with and without fiber agitation]{Comparison of instrument stability from cross-correlating LFC exposures without fiber agitation (left) and with fiber agitation (right). Fiber agitation improves the velocity scatter by a factor on the order of 10, reducing this error source to a level below a few cm s$^{-1}$. Image and caption reprinted from \citet{blackman_performance_2020}.}
     \label{fig:lfc-agitator-comp}
 \end{figure}
 
