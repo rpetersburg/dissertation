@@ -2,7 +2,7 @@
 
 \section{Introduction}
 
-After the completion of the EXPRES pipeline and the presentation of initial results as described in Chapter \ref{chapter:pipeline}, there remained many possibilities for further improvement to the reliability and accuracy of the pipeline. Although the resultant RVs yield statistical precision around 30\cms that varies consistently with the measured signal-to-noise as shown in the previous chapter, residual RMS compared to fit Keplerian orbits still hover around the 1\ms level for HD 217014 \citep{petersburg_extreme-precision_2020} and 58\cms level for HD 3651 \citep{brewer_expres_2020}. Naturally, these levels of precision set a new standard for RV measurement in the community, but they still do not reach the expected instrumental precision determined by \citet{blackman_performance_2020} of 30\cms. Thus, I expected that improvements could nevertheless be made to the pipeline in order to push this standard even further.
+After the completion of the EXPRES pipeline and the presentation of initial results as described in Chapter \ref{chapter:pipeline}, there remained many possibilities for further improvement to the reliability and accuracy of the pipeline. Although the resultant RVs yield statistical precision around 30~\si{\centi\meter\per\second} that varies consistently with the measured signal-to-noise as shown in the previous chapter, residual RMS compared to fit Keplerian orbits still hover around the 1~\si{\meter\per\second} level for HD 217014 \citep{petersburg_extreme-precision_2020} and 58~\si{\centi\meter\per\second} level for HD 3651 \citep{brewer_expres_2020}. Naturally, these levels of precision set a new standard for RV measurement in the community, but they still do not reach the expected instrumental precision determined by \citet{blackman_performance_2020} of 30~\si{\centi\meter\per\second}. Thus, I expected that improvements could nevertheless be made to the pipeline in order to push this standard even further.
 
 In this chapter, I detail contributions I made to the pipeline beyond what was presented in the previous chapter in three separate areas. The first (Chapter \ref{pipeline2:spec-perf}) is the introduction of spectro-perfectionism to the pipeline as a step into an extra dimension of analysis as compared to optimal extraction. The second (Chapter \ref{pipeline2:bspline}) shows how \textit{B}-splines can and have been used in the pipeline to improve our understanding of the spectra that overlap adjacent \'{e}chelle orders. Finally, the third (Chapter \ref{pipeline2:forward-model}) demonstrates an application of \textit{B}-spline stellar templates as an empirical forward model to measure radial velocities.
 
@@ -14,7 +14,7 @@ Rather, \'{e}chelle spectrographs typically have a slit function that is wider t
 
 To fully understand the potential issue with optimal extraction, consider the exaggerated example of a rectangular fiber that is 30-degrees from vertical in the reference frame of the detector. A flat field source projected through the spectrograph with this PSF configuration would be continuous, as expected from an aligned PSF. However, when taking vertical cross-sections of a stellar observation order with a deep absorption line and comparing them against this flat field calibration, as is done in optimal extraction, the shapes definitely do not match up.
 
-Therefore, \citet{bolton_spectro-perfectionism_2009} devised \textit{spectro-perfectionism}, a numerical method that includes as much information about the PSF as possible during the extraction process. Simply, spectro-perfectionism attempts to deconvolve each \'{e}chelle order using knowledge of the 2D PSF at every position along the order trace, yielding an array of statistically uncorrelated spectral bins. Thus, implementation of spectro-perfectionism is two-fold: (1) Determination of the PSF at any position on the detector and (2) execution of the deconvolution algorithm.
+Therefore, \citet{bolton_spectro-perfectionism_2009} devised \textit{spectro-perfectionism}, a numerical me\-thod that includes as much information about the PSF as possible during the extraction process: the shape of vertical slit function \textit{and} the horizontal line spread function. Simply, spectro-perfectionism attempts to deconvolve each \'{e}chelle order using knowledge of this two-dimensional PSF at every position along the order trace, yielding an array of statistically uncorrelated spectral bins. Thus, implementation of spectro-perfectionism is two-fold: (1) Determination of the PSF at any position on the detector and (2) execution of the deconvolution algorithm.
 
 In this section, I describe my own implementation of spectro-perfectionism for use in extracting EXPRES spectra. As far as I'm aware, spectro-perfectionism has only been implemented with SDSS-II \citep{bolton_spectro-perfectionism_2009} and Minerva-Red \citep{cornachione_full_2019} with results that appear comparable to those from optimal extraction. However, there are two major improvements that I present here from my work:
 \begin{enumerate}
@@ -24,7 +24,7 @@ In this section, I describe my own implementation of spectro-perfectionism for u
 
 A typical complaint about spectro-perfectionism is that it is limited by the ability to measure the instrument's PSF: inaccuracies in the PSF at any given position easily propagate along the order and can affect large swaths of data. Therefore, I propose using a flat-relative approach (similar to what is implemented with EXPRES's optimal extraction), which as I show in Section \ref{pipeline2:spec-perf:psf} helps by reducing the dimensionality of the problem.
 
-Also, one possible concern I had with the implementation by \citet{cornachione_full_2019} is the fact that each order is chopped up into multiple sections during deconvolution. Considering the implications of hard borders on a deconvolution problem (see e.g. the Gibbs phenomenon), it is likely this would introduce ringing artifacts into the extracted data. As I show in Section \ref{pipeline2:spec-perf:implement}, extraction of a full order (even one nearly 8000 pixels wide) with spectro-perfectionism is computationally tractable and mitigates possible artifacting.
+Also, one possible concern I have with the implementation by \citet{cornachione_full_2019} is the fact that each order is chopped up into multiple sections during deconvolution. Considering the implications of hard borders on a deconvolution problem (see e.g. the Gibbs phenomenon), it is likely this would introduce ringing artifacts into the extracted data. As I show in Section \ref{pipeline2:spec-perf:implement}, extraction of a full order (even one nearly 8000 pixels wide) with spectro-perfectionism is computationally tractable and mitigates possible artifacting.
 
 
 \subsection{The Deconvolution Problem} \label{pipeline2:spec-perf:bkgd}
@@ -73,9 +73,9 @@ thereby removing the ringing caused by Equation \ref{eq:convolution-soln} \citep
 
 \subsection{Flat-relative Point Spread Function Modeling} \label{pipeline2:spec-perf:psf}
 
-The first step in executing a spectro-perfectionism algorithm is determining the PSF of the instrument. Ideally, the PSF of a spectrograph would be constant across the entire CCD, immensely simplifying the computation costs of the deconvolution. However, the PSF of EXPRES (and most contemporaeneous spectrographs) changes significantly between orders and even along a single order. For example, the bluest orders on the EXPRES detector are about 2 pixels taller than the reddest orders. Thus, a parameterized PSF model is necessary to map out the PSF pixel-by-pixel.
+The first step in executing a spectro-perfectionism algorithm is determining the PSF of the instrument. Ideally, the PSF of a spectrograph would be constant across the entire CCD, immensely simplifying the computation costs of the deconvolution. However, the PSF of EXPRES (and most contemporaeneous spectrographs) changes significantly between orders and even along a single order. For example, the bluest orders on the EXPRES detector are about 2 pixels taller than the reddest orders and the PSF on the red side of each order is about 1.5 pixels wider than on the blue side. Thus, a parameterized PSF model is necessary to map out the PSF pixel-by-pixel.
 
-As in previous iterations of spectro-perfectionism \citep{bolton_spectro-perfectionism_2009, cornachione_full_2019}, the EXPRES PSF model can be fully approximated using a two-dimensional function. For this, I choose a extension of the one-dimensional function presented in Chapter \ref{master-flat} used for modelling the cross-dispersion shape of the extended flat. In two dimensions, this function has the analytic form
+As in previous iterations of spectro-perfectionism \citep{bolton_spectro-perfectionism_2009, cornachione_full_2019}, the EXPRES PSF model can be fully approximated using a two-dimensional function. For this, I choose an extension of the one-dimensional function presented in Chapter \ref{master-flat} used for modelling the cross-dispersion shape of the extended flat. In two dimensions, this function has the analytic form
 \begin{multline}
     \Psi(x, y; A, x_0, y_0, \theta_x, \theta_y, d_x, d_y, \sigma_x, \sigma_y) = \\
     \frac{A}{4} \Bigg[\Phi\bigg(\frac{x' + d_x/2}{\sigma_x \sqrt{2}}\bigg) - \Phi\bigg(\frac{x' - d_x/2}{\sigma_x \sqrt{2}}\bigg)\Bigg] \Bigg[\Phi\bigg(\frac{y' + d_y/2}{\sigma_y \sqrt{2}}\bigg) - \Phi\bigg(\frac{y' - d_y/2}{\sigma_y \sqrt{2}}\bigg)\Bigg]
@@ -134,7 +134,7 @@ In order to characterize the EXPRES PSF, I have implemented a Python sub-package
 \begin{enumerate}
     \item find the positions of individual emission lines, either universally or only along nightly traced orders,
     \item fit any arbitrary PSF function (including flat-relative varieties) to each emission line (see Figure \ref{fig:psf-resid}), masking severe pixel outliers (typically cosmic rays) and rejecting lines not fit well enough by the model (typically blended ThAr lines), and
-    \item fit a two-dimensional polynomial (a $4 \times 4$ coefficient matrix with a Design Matrix structure as in Chapter \ref{wavelength-calibration}) to each of the PSF fit parameters, such that an interpolated PSF could be constructed for any pixel-position on the detector or for any pixel along a traced order (see Figures \ref{fig:psf-params-2d} and \ref{fig:psf-params-1d}).
+    \item fit a two-dimensional polynomial (a $4 \times 4$ coefficient matrix with a design matrix structure as in Chapter \ref{wavelength-calibration}) to each of the PSF fit parameters, such that an interpolated PSF could be constructed for any pixel-position on the detector or for any pixel along a traced order (see Figures \ref{fig:psf-params-2d} and \ref{fig:psf-params-1d}).
 \end{enumerate}
 This code is relatively fast, able to map the PSF from a single image in less than two minutes using Equation \ref{eq:flat-relative-psf} and less than five minutes using Equation \ref{eq:expres_psf}.
 
@@ -171,7 +171,7 @@ The most glaring issue with spectro-perfectionism is the sheer potential size of
 
 Another important computational consideration relates to the complexity of matrix operations used in calculating Equation \ref{eq:convolution-soln} and the reconvolution matrix $\vb{R}$. Specifically, $\vb{\Sigma_s}^{-1}$ is an $L \times L$ matrix that needs to be eigen-decomposed, enabling trivial calculation of both the inverse and matrix square root. Eigen-decomposition has $\mathcal{O}(L^3)$ complexity, unfortunately, meaning this problem does not scale very well, especially if implementing increased spectral sampling as discussed later in this section. Thankfully $\vb{\Sigma}_{\vb{s}}^{-1}$ is symmetric and band-diagonal which enables some sparse-matrix speed-ups.
 
-Similar to the PSF mapping algorithms, the EXPRES implementation of spectro-perfectionism is written as a Python sub-package within the EXPRES pipeline. The algorithms---especially the matrix inversion and eigenvalue decomposition---are accelerated using SciPy's sparse linear algebra functions \citep{virtanen_scipy_2020}. Even so, extraction of a single order at single pixel sampling can take almost 30 seconds, meaning extraction of a complete spectrum can take upwards of 45 minutes.
+Similar to the PSF mapping algorithms, the EXPRES implementation of spectro-per\-fectionism is written as a Python sub-package within the EXPRES pipeline. The algori\-thms---especially the matrix inversion and eigenvalue decomposition---are accelerated using SciPy's sparse linear algebra functions \citep{virtanen_scipy_2020}. Even so, extraction of a single order at single pixel sampling can take almost 30 seconds, meaning extraction of a complete spectrum can take upwards of 45 minutes.
 
 One possible speed up for the extraction, implemented by \citet{cornachione_full_2019} with Minerva-Red, is to run spectro-perfectionism on overlapping subsections of each order and then combine them after reconvolution. This can easily decrease the size of $L$ and therefore substantially increase the speed of the extraction. I would highly caution against this, however, due to ringing artifacts that can appear near the overlap points. Take, for example, Figure \ref{fig:spec-perf-ringing}, with an order extracted by spectro-perfectionism both in its entirety and in small chunks. Even though these two spectra appear very similar from a distance, looking at the normalized residuals between them,
 \begin{equation}
@@ -217,7 +217,7 @@ The similarities between spectro-perfectionism and optimal extraction also exten
     \label{fig:spec-perf-vs-optimal}
 \end{figure}
 
-Differences in the method are much more apparent, however, when extracting observations of an emission line source, such as an LFC, with spectro-perfectionism. As shown in Figure \ref{fig:spec-perf-vs-optimal-lfc}, the individual lines are are ``peakier'' (brighter peaks, smaller line widths) when using spectro-perfectionism, implying higher resolution and signal-to-noise. However, this appears to come with a cost: some of the ringing from the deconvolution has remained even after reconvolution, as evidenced by the two ``lobes'' that appear equally spaced between each LFC line. This exact same structure (with either one or two lobes between each line) even occurs when using simulated ``perfect'' LFC lines with no background, indicating that the lobes are not caused by true signal between LFC lines. The issue seems to lie with the choice of reconvolution matrix, which will unfortunately require further exploration to resolve.
+Differences in the method are much more apparent, however, when extracting observations of an emission line source, such as an LFC, with spectro-perfectionism. As shown in Figure \ref{fig:spec-perf-vs-optimal-lfc}, the individual lines are are ``peakier'' (brighter peaks, smaller line widths) when using spectro-perfectionism, implying higher resolution and signal-to-noise. However, this appears to come with a cost: some of the ringing from the deconvolution has remained even after reconvolution, as evidenced by the two ``lobes'' that appear equally spaced between each LFC line. This exact same structure (with either one or two lobes between each line) even occurs when using simulated ``perfect'' LFC lines with no background, indicating that the lobes are not caused by true signal between LFC lines. The issue seems to lie with the choice of reconvolution matrix, which will require further exploration outside the scope of this work to resolve.
 
 \begin{figure}
     \centering
@@ -240,11 +240,11 @@ Differences in the method are much more apparent, however, when extracting obser
         \hline
         Parameter & Optimal & Spec-perf \\
         \hline
-        $K$ [\ms] & $16.5 \pm 0.2$ & $16.6 \pm 0.2$ \\
+        $K$ [\si{\meter\per\second}] & $16.5 \pm 0.2$ & $16.6 \pm 0.2$ \\
         $P$ [days] & $62.25 \pm 0.03$ & $62.28 \pm 0.03$ \\
         $e$ & $0.605 \pm 0.007$ & $0.591 \pm 0.007$ \\
-        SMP [\ms] & 0.30 & 0.32 \\
-        RMS [\ms] & 1.13 & 1.12 \\
+        SMP [\si{\meter\per\second}] & 0.30 & 0.32 \\
+        RMS [\si{\meter\per\second}] & 1.13 & 1.12 \\
     \end{tabular}
     \caption[HD 3651 -- Keplerian orbital parameter comparison (extraction method)]{Keplerian orbital parameters of HD 3651 b}
     \label{tab:spec-perf-rvs}
@@ -262,7 +262,7 @@ Speed-up of the re-convolution is an obvious angle. SciPy's sparse package provi
 
 Changing the sampling rate of the extraction is another powerful way to utilize spectro-perfectionism. Dispersion is not perfectly constant across each order, therefore, choosing a sampling rate to match the dispersion could prove worthwhile in more easily combining spectra from neighboring orders. However, I will note that careful consideration for normalization, perhaps through the re-convolution matrix, is required when changing the sampling rate in order to continue matching the brightness of adjacent orders.
 
-Finally, I would be curious to see how flat-relative spectro-perfectionism works with spectrographs fed by non-rectangular fibers or slits, such as NEID or HARPS. Relatively much more of the PSF is shared between adjacent columns, since the slit is not as tall, therefore I would expect the differences in extraction and potentially resultant RVs to be much larger.
+Finally, I would be curious to see how flat-relative spectro-perfectionism works with lower-resolution spectrographs fed by non-rectangular fibers or slits, such as NEID or HARPS. Relatively much more of the PSF is shared between adjacent columns, since the slit is not as tall and the resolution is lower, therefore I would expect the differences in extraction and potentially resultant RVs to be much larger.
 
 \section{\textit{B}-spline Regression} \label{pipeline2:bspline}
 
@@ -274,11 +274,11 @@ Combining orders in such a way helps by increasing signal-to-noise along the edg
 
 \textit{B}-splines \citep{de_boor_practical_1978, dierckx_curve_1995, eilers_flexible_1996} are powerful smoothing functions that can be applied specifically for this purpose. A \textit{B}-spline is a piece-wise polynomial function of order $n$ made up of a linear combination of $K$ knots ($k$) each weighted by their own coefficient $c_k$
 \begin{equation}
-    F(x,{c_k}) = \sum_k {c_k B_{k,n}(x)}
+    F(x,{c_k}) = \sum_{k=0}^{K} {c_k B_{k,n}(x)}
 \end{equation}
 where $B_{k,n}$ are degree-$n$ basis functions of the \textit{B}-spline defined using the Cox-de Boor recursion formula \citep{de_boor_practical_1978}. $B$-splines are advantageous primarily because they can be expressed as a linear least-squares problem: uncertainties in the data are folded directly into the analysis and the regression can be run quickly even with a large amount of data, Also, the knots of a $B$-spline can be arbitrarily chosen, meaning that the ``sampling'' of this smoothing function can be chosen relative to the sampling of the instrument, whether that be undersampling to provide an estimate for the continuum, matching instrument sampling to combine orders, or oversampling when co-adding spectra to increase template resolution.
 
-Within this section, I use the term \textit{resolution knots} to described \textit{B}-spline knots that are equally spaced by resolution, or that $\frac{\lambda_k}{\Delta \lambda_k}$ is held constant for each adjacent pair of knots. With some inspection, you'll notice that this simply means the logarithmic wavelengths of the knots are spaced equally. However, I choose to describe the ``resolution'' of the knots as a more intuitive way of understand how they are spaced within the spectrum. For example, $R=137,500$ knots would exactly match the resolution of EXPRES (one knot approximately every four pixels) while $R=600,000$ knots would be clearly oversampling the instrument with a knot essentially at each pixel.
+Within this section, I use the term \textit{resolution knots} to described \textit{B}-spline knots that are equally spaced by resolution, or that $\frac{\lambda_k}{\Delta \lambda_k}$ is held constant for each adjacent pair of knots. With some inspection, you'll notice that this simply means the logarithmic wavelengths of the knots are spaced equally. However, I choose to describe the ``resolution'' of the knots as a more intuitive way of understand how they are spaced within the spectrum. For example, $R=137,500$ knots would exactly match the resolution of EXPRES (one knot approximately every four pixels) while $R=600,000$ knots would be clearly oversampling the instrument with a knot essentially at each spectral bin.
 
 In this section, I provide two use cases for $B$-spline regression within the EXPRES pipeline: continuum normalization (Chapter \ref{pipeline2:bspline:cont-norm}), which has already been implemented as default behaviour in the pipeline, and stellar templating (Chapter \ref{pipeline2:bspline:templates}) which provides options for combining orders and telluric modeling. In Chapter \ref{pipeline2:forward-model}, I describe how these stellar templates are used as a forward model to generate alternative RVs for EXPRES.
 
@@ -294,13 +294,13 @@ An important property of the flat-relative optimal extraction used in the EXPRES
     \label{fig:cont-norm-bspline}
 \end{figure}
 
-To fit the continuum, I use an $R=100$ knot spacing and cubic ($n=2$) \textit{B}-spline basis functions. The same iterative technique of outlier rejection for absportion lines, now with a $-1.5\sigma$ cut-off, can be applied after each regression to slowly morph the \textit{B}-spline to the continuum of the spectrum. The resultant continuum at each step of this iterative process is shown in Figure \ref{fig:cont-norm-bspline}.
+To fit the continuum, I use an $R=100$ knot spacing and cubic ($n=2$) \textit{B}-spline basis functions. The same iterative technique of outlier rejection for absportion lines, now with a $-1.5\sigma$ cut-off, can be applied after each regression to slowly morph the \textit{B}-spline to the continuum of the spectrum. The resultant continuum at many steps of this iterative process is shown in Figure \ref{fig:cont-norm-bspline}.
 
 The improvements with using a continuous $B$-spline regression rather than the order-wise linear fit is most apparent for \'{e}chelle orders 80 and 81 where the oxygen a-band is shared between the two orders. As also shown in Figure \ref{fig:cont-norm-bspline}, the continuum in this region is certainly not perfectly linear and is better described by the local cubic function. The large gaps in the continuum are easily handled by the \textit{B}-spline as well.
 
 \subsection{Stellar Templates} \label{pipeline2:bspline:templates}
 
-This \textit{B}-spline regression can also be used to combine (or ``co-add'') multiple observations of the same stellar target together to produce a resultant template at higher signal-to-noise and resolution as compared to a single observation. As opposed to the morphed SOAP solar spectrum presented as the forward model in Chapter \ref{forward-modeling}, such a stellar template would be completely empirical and could precisely detail the nuances of both the absorption lines and the varying PSF of the instrument. No assumptions could be made about the spectra before combining them, enabling a completely data-driven approach to modeling the spectra.
+This \textit{B}-spline regression can also be used to combine (or ``co-add'') multiple observations of the same stellar target together to produce a resultant template at higher signal-to-noise and resolution as compared to a single observation. As opposed to the morphed NSO solar spectrum presented as the forward model in Chapter \ref{forward-modeling}, such a stellar template would be completely empirical and could precisely detail the nuances of both the absorption lines and the varying PSF of the instrument. No assumptions could be made about the spectra before combining them, enabling a completely data-driven approach to modeling the spectra.
 
 Of course, multiple considerations need to be made before I can simply stack the observations on top of each other and fit them with a \textit{B}-spline:
 \begin{enumerate}
@@ -308,7 +308,7 @@ Of course, multiple considerations need to be made before I can simply stack the
     \item planet-imposed stellar radial velocities could offset these spectra by 10's of m/s, and
     \item telluric contamination must be either masked or divided out in each co-added spectrum.
 \end{enumerate}
-Barycentric correction (1) is an inherent part of the pipeline so these large offsets are automatically corrected for. And, considering a single pixel on the EXPRES detector corresponds to approximately 500 m/s in velocity space ($R = \frac{\lambda}{\Delta\lambda} = \frac{c}{\Delta v}$), typical planetary signals (2) will not affect the data significantly enough to prevent fitting a template. Telluric modeling (3), however, requires a bit more decision-making. In this case, I chose to mask all telluric lines with a depth greater than 0.1 (or a normalized spectral value less than 0.9) and divided out the rest, inflating the corresponding uncertainties accordingly. An example of a \textit{B}-spline stellar template for 95 combined observations of HD 3651 is shown in Figure \ref{fig:stellar-template}. 
+Barycentric correction is an inherent part of the pipeline so these large offsets are automatically corrected for. And, considering a single pixel on the EXPRES detector corresponds to approximately 500 m/s in velocity space ($R = \frac{\lambda}{\Delta\lambda} = \frac{c}{\Delta v}$), typical planetary signals will not affect the data significantly enough to prevent fitting a template. Telluric modeling, however, requires a bit more decision-making. In this case, I chose to mask all telluric lines with a depth greater than 0.1 (or a continuum-normalized spectral value less than 0.9) and divided out the rest, inflating the corresponding uncertainties accordingly. An example of a \textit{B}-spline stellar template for 95 combined observations of HD 3651 is shown in Figure \ref{fig:stellar-template}. 
 
 \begin{figure}
     \centering
@@ -339,8 +339,8 @@ A strong alternative to \textit{B}-spline regression could be Gaussian Process (
 With a \textit{B}-spline stellar template in hand, I constructed a forward modeling algorithm distinct from but similar to the one presented in Chapter \ref{forward-modeling}. The primary changes within this new analysis are:
 \begin{itemize}
     \item it is written in Python for simpler integration with the rest of the EXPRES pipeline,
-    \item it makes use of the \textit{B}-spline stellar templates,
-    \item it can optionally set the chunks to use \textit{wavelength} bins as opposed to \textit{pixel} bins.
+    \item it makes use of the \textit{B}-spline stellar templates, and
+    \item it can optionally set the chunks using \textit{wavelengths} as opposed to \textit{pixels}.
 \end{itemize}
 This final point is most critical to the new implementation; since the \textit{B}-spline makes use of the full spectrum simultaneously as opposed to order-wise, it follows that the RV analysis could do the same. This enables the same benefit as for combining orders in other analysis---increased signal-to-noise along the ends of orders---which should enable greater consistency in RV measurement for these particular regions of the spectra.
 
@@ -390,7 +390,7 @@ Once a velocity and uncertainty is generated for each chunk, an RV for the obser
 \end{enumerate}
 These steps are meant to mitigate systematic effects due to the instrument (e.g. detector non-uniformities), stellar activity which may modify certain absorption lines more than others, and possible residual problems due to imperfect telluric modeling.
 
-An example of the systematic velocity offsets and reduced $\chi$ metric for each chunk using either method is shown in Figures \ref{fig:pixel-chunk-resid} and \ref{fig:wvln-chunk-resid}. Systematic velocity offsets are clearly seen in the bottom left- and right-hand corners of the pixel-chunk data. This is likely caused by the slight misalignment of adjacent orders in the stellar template discussed in the previous section in combination with low density wavelength calibration information from exclusively the ThAr lines. An example of the improvement to the weighted distribution of velocities due to these corrections is shown in Figure \ref{fig:cbc-hist}. The corrections do improve the velocity distribution slightly by increasing weight near the mean and removing some weight from the wings. Also, these distributions appear to slightly favor wavelength chunks in terms of symmetry and less scatter.
+An example of the systematic velocity offsets and reduced $\chi$ metric for each chunk using either method is shown in Figures \ref{fig:pixel-chunk-resid} and \ref{fig:wvln-chunk-resid}. Systematic velocity offsets are clearly seen in the bottom left- and right-hand corners of the pixel-chunk data. This is likely caused by the slight misalignment of adjacent orders in the stellar template discussed in the previous section in combination with low density wavelength calibration information from exclusively the ThAr lines. An example of the improvement to the weighted distribution of velocities due to these corrections is shown in Figure \ref{fig:cbc-hist}. The corrections do improve the velocity distribution slightly by increasing weight near the mean and removing some weight from the wings. Also, these distributions appear to slightly favor wavelength chunks in terms of greater symmetry and less scatter.
 
 \begin{figure}
     \centering
@@ -408,11 +408,11 @@ The data set used to compare against previous RV measurement methods is slightly
         \hline
         Parameter & Old CBC & Pixel CBC & Wavelength CBC \\
         \hline
-        $K$ [\ms] & $16.7 \pm 0.2$ & $16.7 \pm 0.2$ & $16.6 \pm 0.2$ \\
+        $K$ [\si{\meter\per\second}] & $16.7 \pm 0.2$ & $16.7 \pm 0.2$ & $16.6 \pm 0.2$ \\
         $P$ [days] & $62.29 \pm .03$ & $62.29 \pm .03$ & $62.28 \pm .03 $\\
         $e$ & $.599 \pm .006$ & $0.579 \pm .006$ & $.577 \pm .006$ \\
-        SMP [\ms] & 0.29 & 0.23 & 0.23 \\
-        RMS [\ms] & 1.03 & 0.99 & 1.01 \\
+        SMP [\si{\meter\per\second}] & 0.29 & 0.23 & 0.23 \\
+        RMS [\si{\meter\per\second}] & 1.03 & 0.99 & 1.01 \\
     \end{tabular}
     \caption[HD 3651 -- Keplerian orbital parameter comparison (chunk method)]{Keplerian orbital parameters of HD 3651 b}
     \label{tab:cbc-rvs}
@@ -428,6 +428,6 @@ Flat-relative spectro-perfectionism and \textit{B}-spline regression have both p
     \item The \textit{B}-spline regression method of combining orders shows how subtle changes in dispersion across each order \textit{can} be seen in the optimal extraction.
     \item Diagnostic plotting for the new forward model (as in Figures \ref{fig:pixel-chunk-resid} and \ref{fig:wvln-chunk-resid}) also can reveal systematic effects in certain regions of the detector.
 \end{itemize}
-Therefore, although this may not become the new defaults of the EXPRES pipeline, many of the techniques learned here will certainly be included in future iterations of the code. The algorithms themselves will also be there as optional modes of operation for anyone who is interested in further pursuing their possibilities.
+Therefore, although they may not become the new defaults of the EXPRES pipeline, many of the techniques learned here will certainly be included in future iterations of the code. The algorithms themselves will also be there as optional modes of operation for anyone who is interested in further pursuing their possibilities.
 
 I would like to thank Joel Ong for introducing me to spectro-perfectionism and providing some of the groundwork on developing the deconvolution algorithms. I would also like to thank Adam Bolton for conversations on his experiences with spectro-perfectionism.
