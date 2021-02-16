@@ -151,7 +151,7 @@ The number of modes a fiber supports is largely determined by its cross-sectiona
 \begin{table}
 \centering
 \begin{threeparttable}
-\caption[Modal noise tested optical fibers]{Tested Optical Fibers.}
+\caption[Optical fibers used for modal noise testing]{Tested Optical Fibers.}
 	\begin{tabular}{lll}
 	\hline
 	Shape & Size & Manufacturer \\
@@ -375,7 +375,7 @@ N \approx \frac{M_s(\lambda_{min}) - M_s(\lambda_{max})}{10},
 \end{equation}
 where $\lambda_{min}$ and $\lambda_{max}$ are, respectively, the minimum and maximum wavelengths of the relevant calibration region. Note that the calibration source needs to be sufficiently dense (i.e. the number of lines is greater than $N$) to properly use this approximation. Even though Equation (\ref{eq:N}) has not been empirically tested, since it requires a comprehensive study on the systematic correlation of modal noise, we believe it to be a rather conservative estimate for statistical reduction.
 
-We derive Equation (\ref{eq:rv_error}) from the low velocity approximation of the relativistic Doppler effect
+We derive Equation (\ref{eq:rv_error}) from the low velocity approximation of the relativistic Dop\-pler effect
 \begin{equation}
 \frac{\Delta \lambda}{\lambda} = \sqrt{\frac{1 + v/c}{1-v/c}} - 1 \approx \frac{v}{c},
 \label{eq:doppler_effect}
@@ -395,7 +395,7 @@ Combining Equations (\ref{eq:doppler_effect})--(\ref{eq:spx_shift}) we show that
 \begin{equation}
 \frac{v}{c} \approx \frac{\Delta \lambda}{\lambda} = \frac{1}{R} \frac{\Delta \lambda}{\Delta \lambda_R} = \frac{1}{R} \frac{\Delta d}{D}.
 \end{equation}
-If we take the standard deviation of the data from each side of this equation ($v \rightarrow \sigma_{RV}, \Delta d \rightarrow \sigma_d$) and move $c$ to the right side, we get Equation (\ref{eq:rv_error}).
+If we take the standard deviation of the data from each side of this equation ($v \rightarrow \sigma_{RV}$, $\Delta d \rightarrow \sigma_d$) and move $c$ to the right side, we get Equation (\ref{eq:rv_error}).
 
 The idealized agitation method we use to test RV precision includes the circular agitator oscillating at \SI{1.1}{\hertz} and the linear agitator set at \SI{240}{\milli\meter} and \SI{1.0}{\hertz}. Keeping the two agitators at slightly different frequencies means that phase between them constantly changes and a large range of fiber configurations are reached after about \SI{10}{\second}.
 
@@ -466,7 +466,5 @@ As part of the EXPRES fiber architecture, we have employed a modal-noise mitigat
 In order to test the effect of this agitation mechanism on the EXPRES wavelength solution and resultant radial velocities, we took a series of observations of the spectrograph's laser frequency comb with the agitator turned both off and on. After extracting each spectrum (see Chapter \ref{chapter:pipeline}), we assigned a displacement velocity for each observation---relative to the first observation of the series---by cross-correlating each spectrum against an analytic template. A linear trend \citep[caused by slow instrumental drifts, see Chapter \ref{wavelength-calibration} and][]{blackman_performance_2020} was subtracted for each series and the resultant standard deviation of each series was calculated. As shown in Figure \ref{fig:lfc-agitator-comp}, these are 32.8 \cms with the fiber agitator off and 6.6 \cms with the fiber agitator on, improving the velocity scatter by about 5 times, comparable to the improvement predicted in Figure \ref{fig:fiber_rv_error} between slow agitation and coupled agitation.
 
 We recommend that other precision RV spectrographs consider the results found in this paper when designing their own fiber agitators. Since it only affects the fibers between light sources and the spectrograph, such improved agitation methods can even be added to previously commissioned spectrographs to increase S/N and reduce potential false positives. We would recommend simply adding a second independent agitator anywhere along the fiber train to help induce more chaoticism. Modal noise is not a problem that should be treated lightly, as its mitigation will help usher in the next-generation of RV spectroscopy and aid in the search for Earth-sized worlds.
-
-\acknowledgments
 
 We would like to acknowledge NSF Major Research Instrumentation Award AST 1429365, as well as an NSF Advanced Technologies Instrumentation Award AST 1509436. The author would also like to acknowledge Gabor Furesz for assistance with the Fiber Characterization Station design, Saki Kamon and Kristoffer Acu\~na for their data-taking contributions to this project, and the anonymous referee for their thorough comments. The Fiber Characterization Station was built with support from the Fund for Astrophysical Research, Inc. This material is based upon work supported by the National Science Foundation Graduate Research Fellowship under Grant No. 2017242370.

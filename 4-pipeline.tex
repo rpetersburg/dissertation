@@ -22,7 +22,7 @@ Extremely precise spectrographs, in turn, demand extremely precise data reductio
 
 \section{Instrument Description}\label{instrument-description}
 
-EXPRES is a fiber-fed, white-pupil EPRV spectrograph with a design resolution of $R = 150,000$ and a wavelength range of $3800-7800~\mathrm{\AA}$. In practice, \citet{blackman_performance_2020} show that the median resolution is better characterized as $R \sim 137,500$ with a maximum resolution reaching $R \sim 150,000$ in some regions of the detector. EXPRES is environmentally stabilized in a vacuum enclosure and is situated at Lowell Observatory's 4.3 m Lowell Discovery Telescope (LDT) near Flagstaff, Arizona. The multi-instrument port configuration of the LDT allows for high-cadence, flexible scheduling of stars (up to 280 partial nights per year).
+EXPRES is a fiber-fed, white-pupil EPRV spectrograph with a design resolution of $R = 150,000$ and a wavelength range of $3800-7800~\si{\angstrom}$. In practice, \citet{blackman_performance_2020} show that the median resolution is better characterized as $R \sim 137,500$ with a maximum resolution reaching $R \sim 150,000$ in some regions of the detector. EXPRES is environmentally stabilized in a vacuum enclosure and is situated at Lowell Observatory's 4.3 m Lowell Discovery Telescope (LDT) near Flagstaff, Arizona. The multi-instrument port configuration of the LDT allows for high-cadence, flexible scheduling of stars (up to 280 partial nights per year).
 
 Owing to various changes to the hardware configuration during commissioning, we have divided radial velocities from EXPRES into different calibration epochs, with an independent RV offset fitted for each epoch. Each epoch demarcates changes introduced to the configuration of the echellogram on the CCD, the shape of the point-spread function (PSF), or the stability of our calibration sources. A summary of the changes that delineate the beginning of each epoch can be found in Table \ref{tab:epochs}.
 
@@ -31,19 +31,19 @@ Owing to various changes to the hardware configuration during commissioning, we 
 \caption[EXPRES Instrumental Epochs]{Instrumental Epochs\label{tab:epochs}}
 \begin{tabular}{cccl}
 \hline
-Epoch & Start & End & Changes before Epoch Start \tabularnewline
+Epoch & Start & End & Changes before Epoch Start \\
 \hline
-0 & - & 2018 Apr 15 & Commissioning \tabularnewline
-1 & 2018 Apr 15 & 2018 Jun 15 & Increased CCD pre-settle time \tabularnewline
-2 & 2018 Jun 15 & 2018 Nov 8 & Fiber change; \tabularnewline
- & & & CCD rotation \tabularnewline
-3 & 2018 Nov 8 & 2019 Feb 7 & Original science fiber replaced; \tabularnewline
- & & &  Calibration unit rebuilt \tabularnewline
-4 & 2019 Feb 7 & 2019 Aug 4 & LFC beat frequency mitigated; \tabularnewline
- & & &  Fiber agitator repaired \tabularnewline
-5 & 2019 Aug 4 & - & Realignment of FEM; \tabularnewline
+0 & - & 2018 Apr 15 & Commissioning \\
+1 & 2018 Apr 15 & 2018 Jun 15 & Increased CCD pre-settle time \\
+2 & 2018 Jun 15 & 2018 Nov 8 & Fiber change; \\
+ & & & CCD rotation \\
+3 & 2018 Nov 8 & 2019 Feb 7 & Original science fiber replaced; \\
+ & & &  Calibration unit rebuilt \\
+4 & 2019 Feb 7 & 2019 Aug 4 & LFC beat frequency mitigated; \\
+ & & &  Fiber agitator repaired \\
+5 & 2019 Aug 4 & - & Realignment of FEM; \\
 & & &  Replacement of LFC PCF
-\tabularnewline
+\\
 \hline
 \end{tabular}
 \end{table}
@@ -68,7 +68,6 @@ Barycentric corrections are derived from the EXPRES exposure meter, a $R\approx1
 The EXPRES pipeline is written in Python and makes heavy use of the SciPy stack \citep{virtanen_scipy_2020}. We show a schematic representation of it in Figure \ref{fig:flowchart}. In brief, the following steps are taken:
 
 \begin{enumerate}
-\tightlist
 \item At the start of each calibration epoch, several hundred extended flat images are taken. These are used to construct a master extended flat-field image, which is divided out from all exposures in the corresponding calibration epoch.
 \item Each night, 30 dark and 30 science flat images are taken. They are used to reduce and extract the science frames taken the same night.
 \item Echellogram orders are traced using the reduced science flats, a scattered light model is removed, and a flat-relative optimal extraction is performed. 
@@ -113,8 +112,8 @@ The mean and subsequent spline fit for the overscan regions of a single amplifie
 
 \begin{figure}
     \centering
-    \includegraphics{figures-4/ser_oscan}
-    \includegraphics{figures-4/vert_oscan}
+    \includegraphics[width=0.65\textwidth]{figures-4/ser_oscan}
+    \includegraphics[width=0.65\textwidth]{figures-4/vert_oscan}
     \caption[EXPRES detector bias approximation from overscan regions]{Bias approximation using the serial and parallel overscans. The mean and subsequent smoothed mean for each overscan are shown in blue and orange, respectively. Note that the counts shown in the parallel overscan were first subtracted by the first 20 rows of the serial overscan smoothed mean, generating values close to zero.}
     \label{fig:overscan}
 \end{figure}
@@ -131,16 +130,16 @@ Since these corrections are merely relative, we assume that the mean gain of the
     \begin{tabular}{ccc|ccc}
         \hline
         \hline
-        Amplifier & Empirical & STA & Amplifier & Empirical & STA \tabularnewline
+        Amplifier & Empirical & STA & Amplifier & Empirical & STA \\
         \hline
-        0 & 2.57980 & 2.6645 & 8 & 2.69787 & 2.6945 \tabularnewline
-        1 & 2.55171 & 2.5352 & 9 & 2.65100 & 2.6422 \tabularnewline
-        2 & 2.53844 & 2.5218 & 10 & 2.64354 & 2.6367 \tabularnewline
-        3 & 2.52444 & 2.4065 & 11 & 2.60344 & 2.5502 \tabularnewline
-        4 & 2.51480 & 2.6024 & 12 & 2.60497 & 2.5571 \tabularnewline
-        5 & 2.49382 & 2.5686 & 13 & 2.59183 & 2.5630 \tabularnewline
-        6 & 2.52745 & 2.4816 & 14 & 2.62881 & 2.5691 \tabularnewline
-        7 & 2.53478 & 2.4960 & 15 & 2.72938 & 2.6111 \tabularnewline
+        0 & 2.57980 & 2.6645 & 8 & 2.69787 & 2.6945 \\
+        1 & 2.55171 & 2.5352 & 9 & 2.65100 & 2.6422 \\
+        2 & 2.53844 & 2.5218 & 10 & 2.64354 & 2.6367 \\
+        3 & 2.52444 & 2.4065 & 11 & 2.60344 & 2.5502 \\
+        4 & 2.51480 & 2.6024 & 12 & 2.60497 & 2.5571 \\
+        5 & 2.49382 & 2.5686 & 13 & 2.59183 & 2.5630 \\
+        6 & 2.52745 & 2.4816 & 14 & 2.62881 & 2.5691 \\
+        7 & 2.53478 & 2.4960 & 15 & 2.72938 & 2.6111 \\
         \hline
     \end{tabular}
 \end{table}
@@ -227,7 +226,7 @@ The propagated uncertainty of the extraction
 \end{equation}
 is rescaled by $\chi_{\mathrm{red,}x}$ as in \citet{zechmeister_flat-relative_2014}. However, we smooth $\chi_{\mathrm{red,}x}$ across each order using a third-order polynomial before applying it to $\sigma_{s_x}$ to avoid low number statistic variance.
 
-Cosmic rays are rejected by iteratively adding to the cosmic ray mask, $M_{x,y}$, based on a tiered outlier rejection algorithm. After calculating $s_x$ for an entire order, the residual \((D_{x,y}-P_{x,y}s_x)w_{x,y}\) for each pixel is calculated. For each column in the order with a pixel that exceeds $8\sigma$, the pixel with the largest residual is rejected and $s_x$ is re-calculated for that column. This process repeats until all $8\sigma$ outliers are rejected. Next, this same rejection process repeats for $2\sigma$ outliers that also neighbor previously rejected pixels, thus rejecting the dim tails of otherwise bright cosmic rays. Importantly, this second step is executed using two-dimensional pixel information, meaning that a bright cosmic ray on a pixel in a given column can have its tail rejected in an adjacent column.
+Cosmic rays are rejected by iteratively adding to the cosmic ray mask, $M_{x,y}$, based on a tiered outlier rejection algorithm. After calculating $s_x$ for an entire order, the residual $(D_{x,y}-P_{x,y}s_x)w_{x,y}$ for each pixel is calculated. For each column in the order with a pixel that exceeds $8\sigma$, the pixel with the largest residual is rejected and $s_x$ is re-calculated for that column. This process repeats until all $8\sigma$ outliers are rejected. Next, this same rejection process repeats for $2\sigma$ outliers that also neighbor previously rejected pixels, thus rejecting the dim tails of otherwise bright cosmic rays. Importantly, this second step is executed using two-dimensional pixel information, meaning that a bright cosmic ray on a pixel in a given column can have its tail rejected in an adjacent column.
 
 The EXPRES pipeline has two distinct methods of approximating the model $P_{x,y}$ in Equation \ref{eq:least-squares-soln}:
 \begin{enumerate}
@@ -273,10 +272,13 @@ The S/N of a given observation is reported here as the maximum $s_x / \sigma_{s_
 \subsection{Wavelength Calibration}\label{wavelength-calibration}}
 
 EXPRES uses a laser frequency comb (LFC) as its primary calibration source, which generates a series of spectral lines evenly spaced in frequency, whose nominal frequencies $\nu_n$ satisfy the relation
-\begin{equation}\nu_n = \nu_\text{rep} \times n + \nu_\text{offset},\label{eq:lfc}\end{equation}
-for integers $n$. The repetition rate $\nu_\text{rep}$ and offset frequency $\nu_\text{offset}$ are referenced against a GPS-disciplined quartz oscillator, providing calibration stability corresponding to a fractional uncertainty of less than $8\times10^{-12}$ for integration times greater than 1\unit{s}.
+\begin{equation}
+\nu_n = \nu_\text{rep} \times n + \nu_\text{offset}
+\label{eq:lfc}
+\end{equation}
+for integers $n$. The repetition rate $\nu_\text{rep}$ and offset frequency $\nu_\text{offset}$ are referenced against a GPS-disciplined quartz oscillator, providing calibration stability corresponding to a fractional uncertainty of less than $8\times10^{-12}$ for integration times greater than 1\si{\second}.
 
-While it is possible to obtain an absolute calibration from the LFC once the free spectral range of the echellogram has been adequately characterized, the LFC suffers from poor throughput in very blue and very red orders. In particular, although our instrumental throughput is sufficient to permit order tracing and extraction from echelle orders 75 through 160 (for $3800\unit{\AA}<\lambda<8220\unit{\AA}$), the LFC only sufficiently illuminates echelle orders 82 through 135 (for $4500\unit{\AA}<\lambda<7500\unit{\AA}$). The photonic crystal fiber (PCF) of the LFC was then replaced in 2019 July due to the decreasing stability of the LFC. With the replacement, the polarization of the LFC was switched, making the LFC redder and thus changing the orders illuminated by the LFC to echelle orders 82 through 130 (with the blue edge at \(5300\unit{\AA}\)). The polarization switch should significantly increase the lifetime and stability of the LFC. Consequently, we use ThAr lamp exposures taken at the beginning and end of each night as a secondary calibration source to provide well-constrained wavelength solutions for orders outside the range of the LFC.
+While it is possible to obtain an absolute calibration from the LFC once the free spectral range of the echellogram has been adequately characterized, the LFC suffers from poor throughput in very blue and very red orders. In particular, although our instrumental throughput is sufficient to permit order tracing and extraction from echelle orders 75 through 160 (for $3800~\si{\angstrom}<\lambda<8220~\si{\angstrom}$), the LFC only sufficiently illuminates echelle orders 82 through 135 (for $4500~\si{\angstrom}<\lambda<7500~\si{\angstrom}$). The photonic crystal fiber (PCF) of the LFC was then replaced in 2019 July due to the decreasing stability of the LFC. With the replacement, the polarization of the LFC was switched, making the LFC redder and thus changing the orders illuminated by the LFC to echelle orders 82 through 130 (with the blue edge at 5300~\si{\angstrom}). The polarization switch should significantly increase the lifetime and stability of the LFC. Consequently, we use ThAr lamp exposures taken at the beginning and end of each night as a secondary calibration source to provide well-constrained wavelength solutions for orders outside the range of the LFC.
 
 Calibration triplets (3 LFC's) are taken through the science fiber at roughly 15-30 minute intervals throughout observing, interwoven with science exposures. The exposure times of these calibration frames are chosen to match the target S/N of the science exposures. While EXPRES is equipped with a secondary square fiber to permit simultaneous wavelength calibrations, we choose to take calibrations through the science fiber so that our calibration data sample the same pixels and optical elements as the science exposures.  This strategy aims to homogenize our exposures to pixel-level, uncalibratable systematic errors. Also, as shown by \citet{blackman_performance_2020}, the instrumental stability of EXPRES is such that sampling the LFC every 15-30 minutes provides enough information to correct for any instrumental changes throughout the night, as simultaneous calibration would. Calibration images are taken while the telescope is slewing and so typically cost little additional time (less than 2 minutes an hour).
 
@@ -312,19 +314,19 @@ The data analysis pipeline of EXPRES employs two distinct computational techniqu
     \item A ``cross-correlation function'' method \citep[CCF; see][]{baranne_coravel_1979} is used to determine a rough estimate of the absolute radial velocity for each observation (Section \ref{cross-correlation}).
     \item A forward model based on a morphed NSO solar spectrum is used to derive a more precise relative radial-velocity curve (Section \ref{forward-modeling}).
 \end{enumerate}
-Both of these methods are currently implemented in the EXPRES pipeline for self-validation. Simultaneous results from both methods are presented in Section \ref{initial-results}. The methods as implemented in the EXPRES pipeline are described as follows.
+Both of these methods are currently implemented in the EXPRES pipeline for self-vali\-dation. Simultaneous results from both methods are presented in Section \ref{initial-results}. The methods as implemented in the EXPRES pipeline are described as follows.
 
 \subsubsection{Cross-correlation}\label{cross-correlation}
 
 As the first step in our analysis, a CCF method estimates the absolute RV of EXPRES science targets precise to several tens of \cms (depending on photon noise). We also use the CCF method to diagnose drifts and instabilities in our calibration sources, using line lists given by the comb parameters following Equation \ref{eq:lfc} for the LFC or a ThAr line atlas for the ThAr lamp.
 
-The CCF is constructed from the input spectrum \(f(\lambda)\) as well as a spectral-type linelist---a set of spectral lines at rest vacuum wavelengths \(\left\{\lambda_i(0)\right\}\) associated with contrast weights \(\left\{c_i\right\}\) and widths \(\left\{h_i\right\}\). For a given trial radial velocity \(v\), the wavelength of each line in the linelist is redshifted appropriately to
+The CCF is constructed from the input spectrum \(f(\lambda)\) as well as a spectral-type line\-list---a set of spectral lines at rest vacuum wavelengths \(\left\{\lambda_i(0)\right\}\) associated with contrast weights \(\left\{c_i\right\}\) and widths \(\left\{h_i\right\}\). For a given trial radial velocity \(v\), the wavelength of each line in the linelist is redshifted appropriately to
 \begin{equation}
-    \lambda_i(v) = \lambda_i(0) \sqrt{c + v \over c - v}.
+    \lambda_i(v) = \lambda_i(0) \sqrt{\frac{c + v}{c - v}}.
 \end{equation}
 The CCF is then computed as a numerical approximation to the integral
 \begin{equation}
-    \mathrm{CCF}(v) = \int \mathrm{d} \lambda f(\lambda) \sum_i c_i w\left(\lambda - \lambda_i(v) \over h_i\right)
+    \mathrm{CCF}(v) = \int \mathrm{d} \lambda f(\lambda) \sum_i c_i w\left(\frac{\lambda - \lambda_i(v)}{h_i}\right)
     \label{eq:ccf}
 \end{equation}
 where \(w\) is an arbitrary window function approximating a Dirac \(\delta\) function and \(\lambda\) is with respect to the barycentric-corrected wavelength solution from Equation \ref{eq:bary_wavelength}.
@@ -391,8 +393,8 @@ We now present velocities derived with this pipeline based on 47 observations of
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics{figures-4/217014_ccf.pdf}
-    \includegraphics{figures-4/217014_cbc.pdf}
+    \includegraphics[width=0.8\textwidth]{figures-4/217014_ccf.pdf}
+    \includegraphics[width=0.8\textwidth]{figures-4/217014_cbc.pdf}
     \caption[51 Peg b -- radial velocities and Keplerian orbital fits]{Phased radial velocities, Keplerian orbital fits, and residuals for EXPRES observations of 51 Peg b. The figure is labeled with the RMS residual to the fitted orbital solution, as well as the median formal error $\sigma_v$ of all data points shown.}
     \label{fig:217014}
 \end{figure}
@@ -404,14 +406,14 @@ We now present velocities derived with this pipeline based on 47 observations of
     \begin{tabular}{ccccc}
         \hline
         BMJD & $V_{ccf}/\cms$ & $V_{fm}/\cms$ & RV Epoch & S/N
-        \tabularnewline
+        \\
         \hline
-        58639.45844 & $-3320697\pm20$ & $ 5739\pm32$ & 4 & 385 \tabularnewline
-        58641.45174 & $-3331424\pm44$ & $-5035\pm42$ & 4 & 179 \tabularnewline
-        58643.46218 & $-3321644\pm34$ & $ 4854\pm34$ & 4 & 225 \tabularnewline
-        58644.46095 & $-3322776\pm35$ & $ 3527\pm34$ & 4 & 233 \tabularnewline
-        58646.45596 & $-3330577\pm39$ & $-4045\pm38$ & 4 & 203 \tabularnewline
-         & \(\vdots\) & & \tabularnewline
+        58639.45844 & $-3320697\pm20$ & $ 5739\pm32$ & 4 & 385 \\
+        58641.45174 & $-3331424\pm44$ & $-5035\pm42$ & 4 & 179 \\
+        58643.46218 & $-3321644\pm34$ & $ 4854\pm34$ & 4 & 225 \\
+        58644.46095 & $-3322776\pm35$ & $ 3527\pm34$ & 4 & 233 \\
+        58646.45596 & $-3330577\pm39$ & $-4045\pm38$ & 4 & 203 \\
+         & \(\vdots\) & & \\
         \hline
     \end{tabular}
 \end{table}
@@ -423,13 +425,13 @@ Figure \ref{fig:217014} shows the resulting radial velocities from both the CCF 
 \caption[51 Peg b -- Keplerian orbital fit parameters]{Fit parameters for 51 Peg b\label{tab:51peg}}
 \begin{tabular}{cccccc}
 \hline
-Instr. & $K/\ms$ & $e$ & RMS$/\ms$ & $\sigma_v/\ms$ \tabularnewline
+Instr. & $K/\ms$ & $e$ & RMS$/\ms$ & $\sigma_v/\ms$ \\
 \hline
-EXPRES CCF & $56.24\pm0.14$ & $0.000\pm0.002$ & 0.924 & 0.340 \tabularnewline
-EXPRES FM & $56.26\pm0.13$ & $0.007\pm0.003$ & 0.875 & 0.335 \tabularnewline
-HARPS DRS & $53.4\pm1.6$ & $0.062\pm0.010$ & 0.941 & 1.023 \tabularnewline
-HIRES & $56.7\pm0.4$ & $0.020\pm0.007$ & 2.74 & 1.169 \tabularnewline
-%\(58271.9±0.6\)\tabularnewline
+EXPRES CCF & $56.24\pm0.14$ & $0.000\pm0.002$ & 0.924 & 0.340 \\
+EXPRES FM & $56.26\pm0.13$ & $0.007\pm0.003$ & 0.875 & 0.335 \\
+HARPS DRS & $53.4\pm1.6$ & $0.062\pm0.010$ & 0.941 & 1.023 \\
+HIRES & $56.7\pm0.4$ & $0.020\pm0.007$ & 2.74 & 1.169 \\
+%\(58271.9±0.6\)\\
 \hline
 \end{tabular}
 \end{table}
@@ -466,9 +468,9 @@ Following our diagnosis and repair of the LFC beat frequency noted in Table \ref
 
 Many of the novel techniques that we have adopted in the EXPRES pipeline involve the introduction of chromatic dependences into quantities that have previously been considered to be uniform with wavelength, such as calibration offsets and the barycentric offset velocity. It therefore behooves us to investigate possible chromatic effects that emerge at the end of the CCF velocity-solving and orbit-fitting procedure.
 
-The CCF analysis in Section \ref{initial-results} was performed by co-adding CCFs derived from echelle orders 126 through 86 ($4850\unit{\AA}<\lambda<7150\unit{\AA}$) before fitting an absorption-line model to derive a velocity. These orders are those for which at least $N_\text{min}=19$ LFC lines are detected that pass both the S/N threshold and all quality checks imposed by our peakfitter. ($N_\text{min}$ depends on the degree of the polynomial fitted to the wavelength solution, which is a free parameter in our code, as are the threshold values for these quality checks).
+The CCF analysis in Section \ref{initial-results} was performed by co-adding CCFs derived from echelle orders 126 through 86 ($4850~\si{\angstrom}<\lambda<7150~\si{\angstrom}$) before fitting an absorption-line model to derive a velocity. These orders are those for which at least $N_\mathrm{min}=19$ LFC lines are detected that pass both the S/N threshold and all quality checks imposed by our peakfitter. ($N_\mathrm{min}$ depends on the degree of the polynomial fitted to the wavelength solution, which is a free parameter in our code, as are the threshold values for these quality checks).
 
-In Figure \ref{fig:orders}, we show the RMS residuals from the orbital solutions that arise when we repeat these analyses while varying the range of echelle orders used when co-adding CCFs; our default parameter selections are indicated with the red dotted lines. In particular, this means extrapolating the wavelength solution and chromatic barycentric correction beyond the spectral range of the LFC, which covers echelle orders 130 through 82, and of the chromatic exposure meter, which covers orders 135 through 86 ($\sim4650\unit{\AA}<\lambda<7150\unit{\AA}$).
+In Figure \ref{fig:orders}, we show the RMS residuals from the orbital solutions that arise when we repeat these analyses while varying the range of echelle orders used when co-adding CCFs; our default parameter selections are indicated with the red dotted lines. In particular, this means extrapolating the wavelength solution and chromatic barycentric correction beyond the spectral range of the LFC, which covers echelle orders 130 through 82, and of the chromatic exposure meter, which covers orders 135 through 86 ($\sim4650~\si{\angstrom}<\lambda<7150~\si{\angstrom}$).
 
 \begin{figure}
 \centering
@@ -494,5 +496,5 @@ These caveats notwithstanding, we have demonstrated that the technical innovatio
 
 Finally, we hope the lessons we have learned in the process of commissioning this instrument, and the techniques we have developed, to be of some value to the community of EPRV instrument builders moving forward.
 
-\acknowledgements{We thank the anonymous referee for comments that significantly improved this paper. We gratefully acknowledge Yale University, the Heising-Simons Foundation, and an anonymous Yale alumni donor for providing telescope time for EXPRES used to obtain the data in this paper. We also acknowledge the extensive work that went into the RePack spectral extraction code, written by Lars Buchhave; this code helped benchmark the EXPRES optimal extraction described in this paper. J.O. thanks X. Dumusque for illuminating and productive discussions. We especially thank the NSF for funding that allowed for precise wavelength calibration and software pipelines through NSF ATI-1509436 and NSF AST-1616086 and for the construction of EXPRES through MRI-1429365. This material is based on work supported by the National Science Foundation Graduate Research Fellowship under grant No. DGE1122492 (RRP, LLZ, ABD).}
+We thank the anonymous referee for comments that significantly improved this paper. We gratefully acknowledge Yale University, the Heising-Simons Foundation, and an anonymous Yale alumni donor for providing telescope time for EXPRES used to obtain the data in this paper. We also acknowledge the extensive work that went into the RePack spectral extraction code, written by Lars Buchhave; this code helped benchmark the EXPRES optimal extraction described in this paper. J.O. thanks X. Dumusque for illuminating and productive discussions. We especially thank the NSF for funding that allowed for precise wavelength calibration and software pipelines through NSF ATI-1509436 and NSF AST-1616086 and for the construction of EXPRES through MRI-1429365. This material is based on work supported by the National Science Foundation Graduate Research Fellowship under grant No. DGE1122492 (RRP, LLZ, ABD).
 

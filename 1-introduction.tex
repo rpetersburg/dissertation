@@ -137,8 +137,8 @@ The history of exoplanet detection with the RV technique can be traced back thro
 
 \begin{figure}
     \centering
-    \includegraphics{figures-1/rv-exoplanets.pdf}
-    \caption[Radial-velocity Technique Timeline -- Exoplanet discoveries by year and semi-amplitude]{Confirmed exoplanets by year of discovery and measured RV semi-amplitude (data compiled using exoplanet.eu on 1/31/2021). The horizontal dashed line indicates the RV semi-amplitude of Earth.}
+    \includegraphics[width=\textwidth]{figures-1/rv-exoplanets.pdf}
+    \caption[Radial-velocity Technique Timeline -- Exoplanet discoveries by year and semi-amplitude]{Confirmed exoplanets by year of discovery and measured RV semi-amplitude (data compiled using \url{exoplanet.eu} on 1/31/2021). The horizontal dashed line indicates the RV semi-amplitude of Earth.}
     \label{fig:rv-exoplanets}
 \end{figure}
 
@@ -154,7 +154,7 @@ Table \ref{tab:spectrographs} lists just a handful of the many instruments---alo
         \hline
         Hamilton & 1987 & 50,000 & 390-800 & 3.0 \\
         ELODIE & 1993 & 42,000 & 390--680 & 10.0 \\
-        HIRES & 1996 & 55,000 & 364--800 & 3.0\rightarrow1.5 \\
+        HIRES & 1996 & 55,000 & 364--800 & $3.0\rightarrow1.5$ \\
         Tull & 1998 & 60,000 & 345--980 & 5.0 \\
         HRS & 2001 & 60,000 & 408--784 & 3.0 \\
         \hline
@@ -238,7 +238,7 @@ After the \'echelle grating, the light is then focused near a small optical corr
 
 The EXPRES detector (that produced Figure \ref{fig:expres-format}) is a Charge-Coupled Device (CCD) that converts photons (particles of light) into electrons (particles of electric charge) within a large number of discrete pixels arranged as a two-dimensional array. The rate of success with which each pixel can make this conversion is called its quantum efficiency. The CCD, after a set exposure time, then transfers and amplifies these electrons through a series of read-out electronics to convert them into a digital signal for processing by a computer. The conversion ratio between this digital value and the true number of counted electrons is called the gain. There are two important sources of noise during this process: photon noise and read noise. Photon noise is caused by the quantized nature of light: only an integer number of photons can hit any given pixel. Therefore, random fluctuations in brightness are predicted by Poisson statistics, meaning the expected standard deviation of $N$ photons hitting a given pixel is $\sigma_\gamma=\sqrt{N}$. Read noise is rather an inherent property of each CCD pixel. As the photon-induced electrons (or photo-electrons) are read out, there is some constant scatter to the values, whose standard deviation is defined as the read noise ($\sigma_r$). These two terms are typically added in quadrature ($\sigma=\sqrt{\sigma_\gamma^2 + \sigma_r^2}$) to yield a complete noise model for each CCD pixel. Ideally, CCDs are developed with maximum quantum efficiency and minimum read noise.
 
-Figure \ref{fig:expres} also reveals some of the environmental stability measures taken by EXPRES \citep{jurgenson_expres_2016}. The entire optical bench is built within a large vacuum chamber (meaning we are normally not able to see it) to maintain an extremely low and stable pressure ($1\times 10^{-7} \pm 2\times 10^{-8}$~\si{\torr}) as well as less than 0.075~\si{\kelvin} per day drifts in temperature \citep{blackman_performance_2020}. The optical bench itself is also constructed from Invar, a nickel-iron alloy that flexes very little with changing temperature. Along the bottom are two sets of springs that vibrationally isolate the spectrograph from the slab it is sitting on, which itself is physically isolated from the rest of the telescope building foundation. Finally, the EXPRES detector is super-cooled and temperature controlled with an independent cryostat to minimize thermal effects on the CCD.
+Figure \ref{fig:expres} also reveals some of the environmental stability measures taken by EXPRES \citep{jurgenson_expres_2016}. The entire optical bench is built within a large vacuum chamber (meaning we are normally not able to see it) to maintain an extremely low and stable pressure ($1\times 10^{-7} \pm 2\times 10^{-8}$~torr) as well as less than 0.075~\si{\kelvin} per day drifts in temperature \citep{blackman_performance_2020}. The optical bench itself is also constructed from Invar, a nickel-iron alloy that flexes very little with changing temperature. Along the bottom are two sets of springs that vibrationally isolate the spectrograph from the slab it is sitting on, which itself is physically isolated from the rest of the telescope building foundation. Finally, the EXPRES detector is super-cooled and temperature controlled with an independent cryostat to minimize thermal effects on the CCD.
 
 \subsection{Wavelength Calibration} \label{intro:wvln_cal}
 

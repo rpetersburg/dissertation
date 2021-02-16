@@ -132,7 +132,7 @@ Measurement of an \'{e}chelle spectrograph PSF requires a sparse emission line s
 
 In order to characterize the EXPRES PSF, I have implemented a Python sub-package within the EXPRES pipeline presented in Chapter \ref{chapter:pipeline}. This PSF sub-package uses a reduced observation of an emission line source to
 \begin{enumerate}
-    \item find the positions of individual emission lines, either universally or only along nightly traced orders,
+    \item find the positions of individual emission lines, either universally or only along night\-ly traced orders,
     \item fit any arbitrary PSF function (including flat-relative varieties) to each emission line (see Figure \ref{fig:psf-resid}), masking severe pixel outliers (typically cosmic rays) and rejecting lines not fit well enough by the model (typically blended ThAr lines), and
     \item fit a two-dimensional polynomial (a $4 \times 4$ coefficient matrix with a design matrix structure as in Chapter \ref{wavelength-calibration}) to each of the PSF fit parameters, such that an interpolated PSF could be constructed for any pixel-position on the detector or for any pixel along a traced order (see Figures \ref{fig:psf-params-2d} and \ref{fig:psf-params-1d}).
 \end{enumerate}
@@ -195,7 +195,7 @@ Cosmic ray rejection is built directly into the extraction algorithm, similar to
 \end{equation}
 All pixels with residuals greater than $5\sigma$ are masked from the data and the complete order is subsequently deconvolved again. In order to speed up this aspect of the pipeline, I only re-execute the deconvolution on portions of the CCD affected by cosmic ray masking in the previous iteration.
 
-The final consideration is the choice of extraction sampling, since it also has implications for the computational complexity and the normalization of the flat-relative PSF. \textit{Sampling} in this context is simply the choice of how densely to extract a spectrum along a given order. Optimal extraction is limited to the horizontal pixel dimension of the detector: each spectral sample relates to one column of the detector. Spectro-perfectionism does not have this limitation since a 2D PSF could be centered on fractional pixels. Thus, there are many different ways in which a given order could be sampled. For simplicity in executing the algorithm and comparing it against optimal extraction as done in the following section, I will only present results here which have the same sampling density as optimal extraction: once per detector column. Arbitrary sampling densities, however, are still explorable with this implementation of spectro-perfectionism.
+The final consideration is the choice of extraction sampling, since it also has implications for the computational complexity and the normalization of the flat-relative PSF. \textit{Sampling} in this context is simply the choice of how densely to extract a spectrum along a given order. Optimal extraction is limited to the horizontal pixel dimension of the detector: each spectral sample relates to one column of the detector. Spectro-perfectionism does not have this limitation since a 2D PSF could be centered on fractional pixels. Thus, there are many different ways in which a given order could be sampled. For simplicity in executing the algorithm and comparing it against optimal extraction as done in the following section, I will only present results here which have the same spectral binning as optimal extraction: once per detector column. Arbitrary sampling, however, is still explorable with this implementation of spectro-perfectionism.
 
 \subsection{Extraction Performance} \label{pipeline2:spec-perf:performance}
 
@@ -221,19 +221,19 @@ Differences in the method are much more apparent, however, when extracting obser
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/spec-perf-vs-optimal-lfc.pdf}
+    \includegraphics[width=\textwidth]{figures-5/spec-perf-vs-optimal-lfc.pdf}
     \caption[Spectro-perfectionism vs. optimal extraction -- Laser frequency comb spectrum]{Comparison of spectro-perfectionism against optimal extraction for an extracted spectrum of an LFC, taken on the same date as the data in Figure \ref{fig:spec-perf-vs-optimal}.}
     \label{fig:spec-perf-vs-optimal-lfc}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/spec-perf-rvs.pdf}
+    \includegraphics[width=\textwidth]{figures-5/spec-perf-rvs.pdf}
     \caption[Spectro-perfectionism vs. optimal extraction -- HD 3651 radial velocities]{RVs generated from the EXPRES pipeline after using both optimal extraction (top) and spectro-perfectionism (middle) on a series of HD 3651 observations. Residuals from fit Keplerian models for each set of RVs are shown in the bottom plot.}
     \label{fig:spec-perf-rvs}
 \end{figure}
 
-\begin{table}[width=\textwidth]
+\begin{table}
     \centering
     \begin{tabular}{c|cc}
         \hline
@@ -260,7 +260,7 @@ This all being said, I would not recommend spectro-perfectionism as a one-to-one
 
 Speed-up of the re-convolution is an obvious angle. SciPy's sparse package provides a 20\% increase in speed over other SciPy linear algebra functions, but I have yet to find anything faster. I have also looked into iterative deconvolution methods such as Gold deconvolution \citep{morhac_efficient_2003, morhac_deconvolution_2006} that preclude the need for re-convolution due to strong assumptions of positive-definiteness in the matrices. However, due to the potentially large number of iterations required to reach a stable solution, these methods sometimes take even longer. Better optimization through parallelization may also be a possibility. Regardless, further research here should absolutely be prioritized.
 
-Changing the sampling rate of the extraction is another powerful way to utilize spectro-perfectionism. Dispersion is not perfectly constant across each order, therefore, choosing a sampling rate to match the dispersion could prove worthwhile in more easily combining spectra from neighboring orders. However, I will note that careful consideration for normalization, perhaps through the re-convolution matrix, is required when changing the sampling rate in order to continue matching the brightness of adjacent orders.
+Changing the sampling of the extraction is another powerful way to utilize spectro-perfectionism. Dispersion is not perfectly constant across each order, therefore, choosing a spectral bin size that matches local dispersion could prove worthwhile in more easily combining spectra from neighboring orders. However, I will note that careful consideration for normalization, perhaps through the re-convolution matrix, is required when changing the sampling in order to continue matching the brightness of adjacent orders.
 
 Finally, I would be curious to see how flat-relative spectro-perfectionism works with lower-resolution spectrographs fed by non-rectangular fibers or slits, such as NEID or HARPS. Relatively much more of the PSF is shared between adjacent columns, since the slit is not as tall and the resolution is lower, therefore I would expect the differences in extraction and potentially resultant RVs to be much larger.
 
@@ -327,7 +327,7 @@ An important caveat to the use of a spectrum continuously, rather than order-wis
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/order-matching.pdf}
+    \includegraphics[width=\textwidth]{figures-5/order-matching.pdf}
     \caption[Stellar template overlapping orders]{Overlapping spectral orders of an observation of HD 3651 and the resultant residuals to the \textit{B}-spline regression. Each \'{e}chelle order in the residual plot is colored differently to emphasize the trend. This effect is seen for all observations made with EXPRES, including wavelength calibrations.}
     \label{fig:order-matching}
 \end{figure}
@@ -346,7 +346,7 @@ This final point is most critical to the new implementation; since the \textit{B
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/chunk-vels.pdf}
+    \includegraphics[width=\textwidth]{figures-5/chunk-vels.pdf}
     \caption[HD 3651 forward model chunk velocities]{Demonstration of chunk velocities for an observation of HD 3651 taken on October 24, 2020 using both pixel-chunks (top) and wavelength-chunks (bottom).}
     \label{fig:chunk-vels}
 \end{figure}
@@ -362,21 +362,21 @@ Masked residual outliers in the spectrum typically come from improper telluric m
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/pixel-chunk-resid.pdf}
+    \includegraphics[width=\textwidth]{figures-5/pixel-chunk-resid.pdf}
     \caption[Forward model chunk velocity offsets and reduced $\chi$ metrics -- pixel chunks]{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using pixel chunks.}
     \label{fig:pixel-chunk-resid}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/wvln-chunk-resid.pdf}
+    \includegraphics[width=\textwidth]{figures-5/wvln-chunk-resid.pdf}
     \caption[Forward model chunk velocity offsets and reduced $\chi$ metrics -- wavelength chunks]{Chunk mean velocity offsets (top) and reduced $\chi$ metrics (bottom) over all observations of HD 3651 using wavelength chunks.}
     \label{fig:wvln-chunk-resid}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/cbc-hist.pdf}
+    \includegraphics[width=\textwidth]{figures-5/cbc-hist.pdf}
     \caption[Chunk velocity distribution with and without correction]{Histograms for the distribution of chunk velocities calculated using pixel (top) and wavelength (bottom) chunk both with and without residual velocity corrections. These are variance weighted histograms, meaning the contribution of a single velocity is weighted by its posterior variance.}
     \label{fig:cbc-hist}
 \end{figure}
@@ -394,14 +394,14 @@ An example of the systematic velocity offsets and reduced $\chi$ metric for each
 
 \begin{figure}
     \centering
-    \includegraphics{figures-5/cbc-comparison.pdf}
+    \includegraphics[width=\textwidth]{figures-5/cbc-comparison.pdf}
     \caption[Keplerian orbital fit comparison between chunk methods]{Comparison of the two chunk-by-chunk velocities and corresponding residuals to a Keplerian orbital fit.}
     \label{fig:cbc-comparison}
 \end{figure}
 
 The data set used to compare against previous RV measurement methods is slightly larger than used for spectro-perfectionism: 141 observations of HD 3651 from August 2019 to January 2021. A comparison of the velocities generated using both pixel and wavelength chunks are shown in Figure \ref{fig:cbc-comparison} along with corresponding residuals to a Keplerian orbital fit. The orbital fit parameters are given in Table \ref{tab:cbc-rvs} along with a comparison to results using the forward model from Chapter \ref{forward-modeling}. SMP (single measurement precision) is the median of the RV errors and RMS is the product of the SMP and the $\chi_\mathrm{red}$ of the fit. Results between these three methods are quite similar.
 
-\begin{table}[width=\textwidth]
+\begin{table}
     \centering
     \begin{tabular}{c|ccc}
         \hline
